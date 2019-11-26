@@ -78,21 +78,21 @@
                                 <ul class="media-list">
                                     @for ($i = 0; $i < 4; $i++)
                                         <li class="media">
-                                        <div class="mr-3 position-relative">
-                                            <img src="/global_assets/images/placeholders/placeholder.jpg" width="36" height="36" class="rounded-circle" alt="">
-                                        </div>
-
-                                        <div class="media-body">
-                                            <div class="media-title">
-                                                <a href="{{ route('POmessages') }}">
-                                                    <span class="font-weight-semibold">{{ 'James Alexander' }}</span>
-                                                    <span class="text-muted float-right font-size-sm">04:58</span>
-                                                </a>
+                                            <div class="mr-3 position-relative">
+                                                <img src="/global_assets/images/placeholders/placeholder.jpg" width="36" height="36" class="rounded-circle" alt="">
                                             </div>
 
-                                            <span class="text-muted">{{ 'who knows, maybe that would be the best thing for me...' }}</span>
-                                        </div>
-                                    </li>
+                                            <div class="media-body">
+                                                <div class="media-title">
+                                                    <a href="{{ route('POmessages') }}">
+                                                        <span class="font-weight-semibold">{{ 'James Alexander' }}</span>
+                                                        <span class="text-muted float-right font-size-sm">04:58</span>
+                                                    </a>
+                                                </div>
+
+                                                <span class="text-muted">{{ 'who knows, maybe that would be the best thing for me...' }}</span>
+                                            </div>
+                                        </li>
                                     @endfor
                                 </ul>
                             </div>
@@ -105,7 +105,7 @@
                     <li class="nav-item dropdown dropdown-user">
                         <a href="#" class="navbar-nav-link d-flex align-items-center dropdown-toggle" data-toggle="dropdown">
                             <img src="global_assets/images/placeholders/placeholder.jpg" class="rounded-circle mr-2" height="34" alt="">
-                            <span>{{ Auth::user()->fname }}</span>
+                            <span>{{ 'Oxama', '' }}</span>
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-right">
@@ -190,23 +190,44 @@
                     </div>
                 </div>
             </footer>
-	<!-- /footer -->
-
+	<!-- /footer -->        
     <script type="text/javascript">
-    document.getElementById("account-settings").style.display = "none";
-    $(document).ready(function(){
-      $('#acc-sett').click(function(){
-        $("#account-settings").show();
-        $("#profile-information").hide();
-        document.getElementById("main-text").innerText = "Account Settings";
-      });
-      $('#prof-info').click(function(){
-        $("#account-settings").hide();
-        $("#profile-information").show();
-        document.getElementById("main-text").innerText = "Profile";
-      });
-    });
-</script>
+        document.getElementById("account-settings").style.display = "none";
+        $(document).ready(function(){
+            $('#acc-sett').click(function(){
+                $("#account-settings").show();
+                $("#profile-information").hide();
+                document.getElementById("main-text").innerText = "Account Settings";
+            });
+            $('#prof-info').click(function(){
+                $("#account-settings").hide();
+                $("#profile-information").show();
+                document.getElementById("main-text").innerText = "Profile";
+            });
+        });   
+    </script>
+    <script type="text/javascript">
+            $(document).ready(function(){
+                $('#sendmessage').submit(function(e){
+                    var route = $('#sendmessage').data('route');
+                    var form_data = $(this);
+                    $.ajax({
+                        type: 'POST',                        
+                        url: route,
+                        data: form_data.serialize(),
+                        success: function(Response){
+                            console.log(Response);
+                            $('#text').val('');
+                            var today = new Date();
+                            var li = $('<li class="media"></li>');
+                            li.html('<div class="mr-3"><a href="#"><img src="/global_assets/images/placeholders/placeholder.jpg" class="rounded-circle" width="40" height="40" alt=""></a></div><div class="media-body"><div class="media-chat-item">' + Response.message +'</div><div class="font-size-sm text-muted mt-2">' + today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate() + ' ' + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds() +'<a href="#"><i class="icon-pin-alt ml-2 text-muted"></i></a></div></div>');
+                            $("#chat_list").append(li);
+                        }
+                    });
+                    e.preventDefault();
+                }); 
+            });
+    </script>
 </body>
 
 </html>

@@ -50,7 +50,7 @@ var FormWizard = function() {
             labels: {
                 previous: '<i class="icon-arrow-left13 mr-2" /> Previous',
                 next: 'Next <i class="icon-arrow-right14 ml-2" />',
-                finish: 'Submit form <i class="icon-arrow-right14 ml-2" />'
+                register: 'Submit form <i class="icon-arrow-right14 ml-2" />'
             },
             onContentLoaded: function (event, currentIndex) {
                 $(this).find('.card-body').addClass('hide');
@@ -59,9 +59,6 @@ var FormWizard = function() {
                 _componentSelect2();
                 _componentUniform();
             },
-            onFinished: function (event, currentIndex) {
-                alert('Form submitted.');
-            }
         });
 
         // Saving wizard state
@@ -167,7 +164,8 @@ var FormWizard = function() {
                 return form.valid();
             },
             onFinished: function (event, currentIndex) {
-                alert('Submitted!');
+                document.getElementById('devPage').submit(); 
+                return false;
             }
         });
 

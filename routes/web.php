@@ -15,7 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 */
-Auth::routes();
+Auth::routes(['verify' => true]);
 
 //Route::get('/home', 'HomeController@index')->name('home');
 
@@ -57,9 +57,18 @@ Route::get('/register/Dev', function () {
     return view('auth.Devregister');
 })->name('Devregister');
 
+Route::get('/registerDeveloper', 'Auth\RegisterDeveloperController@create')->name('registerDeveloper');
+
 Route::get('/passwordrecovery', function () {
     return view('auth.passwordrecovery');
 })->name('passwordrecovery');
+
+Route::get('/contacts', 'ContactsController@get')->name('GetContacts');
+
+Route::get('/conversation/{id}', 'ContactsController@getMessagesFor')->name('GetMessagesList');
+
+Route::post('/conversation/send', 'ContactsController@send')->name('sendMessage');
+
 
 
 
@@ -76,10 +85,6 @@ Route::get('/ProductOwner/profile', function () {
     return view('ProductOwner.profile');
 })->name('POprofile');
 
-Route::post('/ProductOwner/messages', function () {
-    return view('ProductOwner.messages');
-})->name('POmessages');
-
-Auth::routes();
+Route::get('/ProductOwner/messages', 'ContactsController@get')->name('POmessages');
 
 Route::get('/home', 'HomeController@index')->name('home');

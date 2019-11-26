@@ -79,6 +79,7 @@
 							<div class="col-md-6">
 								<div class="form-group form-group-feedback form-group-feedback-right">
 									<input id="password-confirm" type="password" class="form-control" placeholder="Confirm Password" name="password_confirmation" required autocomplete="new-password">
+									<input id="usertype" type="text" class="form-control" placeholder="Confirm Password" name="usertype" required autocomplete="new-password" value="ProductOwner" hidden>
 									<div class="form-control-feedback">
 											<i class="icon-user-lock text-muted"></i>
 									</div>
