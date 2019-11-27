@@ -57,7 +57,6 @@
 </head>
 
 <body>
-
 	<!-- Main navbar -->
     <div class="navbar navbar-expand-md">
         <div class="container">
@@ -108,19 +107,25 @@
 			<!-- /content area -->
 
 			<!-- Footer -->
-		    <footer id="footer">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="text-center">
-                                <p>&copy; G-Hire 2019. All Rights Reserved.</p>
-                                <a target="_blank" href="http://www.themeum.com">Privacy Policy</a> |
-                                <a target="_blank" href="http://www.themeum.com">Terms of Services</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </footer>
+			<div class="navbar navbar-expand-lg navbar-light">
+				<div class="text-center d-lg-none w-100">
+					<button type="button" class="navbar-toggler dropdown-toggle" data-toggle="collapse" data-target="#navbar-footer">
+						<i class="icon-unfold mr-2"></i>
+						Footer
+					</button>
+				</div>
+				
+				<div class="navbar-collapse collapse" id="navbar-footer">
+					<span class="navbar-text">
+						<a href="{{ route('default') }}">&copy; G-Hire 2019. All Rights Reserved.</a>
+					</span>
+		
+					<ul class="navbar-nav ml-lg-auto">
+						<li class="nav-item"><a href="#" class="navbar-nav-link" target="_blank"><i class="icon-lifebuoy mr-2"></i> Privacy Policy</a></li>
+						<li class="nav-item"><a href="#" class="navbar-nav-link" target="_blank"><i class="icon-file-text2 mr-2"></i> Terms of Services</a></li>
+					</ul>
+				</div>
+			</div>
 			<!-- /footer -->
 
 		</div>

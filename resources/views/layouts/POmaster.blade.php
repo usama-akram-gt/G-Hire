@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Product-Owner | G-Hire</title>
 
     <!-- Global stylesheets -->
@@ -16,8 +17,6 @@
     <link href="/pages/assets/css/components.min.css" rel="stylesheet" type="text/css">
     <link href="/pages/assets/css/colors.min.css" rel="stylesheet" type="text/css">
     <!-- /global stylesheets -->
-
-    <link href="/css/main.css" rel="stylesheet">
 
     <!-- Core JS files -->
     <script src="/global_assets/js/main/jquery.min.js"></script>
@@ -48,112 +47,167 @@
 <body class="">
 
     <!-- Main navbar -->
-     <div class="navbar navbar-expand-md">
-        <div class="container">
-            <div class="navbar-brand">
-                <a href="index.php" class="d-inline-block">
-                    <h1>G-Hire</h1>
-                </a>
-            </div>
+	<div class="navbar navbar-expand-md navbar-dark">
+		<div class="navbar-brand wmin-0 mr-5">
+			<a href="{{ route('default') }}" class="d-inline-block">
+				<img src="/global_assets/images/logo_light.png" alt="">
+			</a>
+		</div>
 
-            <div class="collapse navbar-collapse" id="navbar-mobile">           
-                <span class="ml-md-3 mr-md-auto"></span>
-                <ul class="navbar-nav">
-                    <li class="nav-item dropdown dropdown-user">
-                        <span class="badge bg-success align-self-start ml-3">Online</span>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a href="#" class="navbar-nav-link dropdown-toggle caret-0" data-toggle="dropdown">
-                            <i class="icon-bubbles4"></i>
-                            <span class="d-md-none ml-2">Messages</span>
-                            <span class="badge badge-pill bg-warning-400 ml-auto ml-md-0">2</span>
+		<div class="collapse navbar-collapse" id="navbar-mobile">
+			<ul class="navbar-nav">
+				<li class="nav-item dropdown">
+					<a href="#" class="navbar-nav-link dropdown-toggle caret-0" data-toggle="dropdown">
+						<i class="icon-people"></i>
+						<span class="d-md-none ml-2">Users</span>
+						<span class="badge badge-mark border-orange-400 ml-auto ml-md-0"></span>
+					</a>
+					
+					<div class="dropdown-menu dropdown-content wmin-md-300">
+						<div class="dropdown-content-header">
+							<span class="font-weight-semibold">Developers online</span>
+						</div>
+
+						<div class="dropdown-content-body dropdown-scrollable">
+							<ul class="media-list">
+								<li class="media">
+									<div class="mr-3">
+										<img src="/global_assets/images/placeholders/placeholder.jpg" width="36" height="36" class="rounded-circle" alt="">
+									</div>
+									<div class="media-body">
+										<a href="#" class="media-title font-weight-semibold">Jordana Ansley</a>
+										<span class="d-block text-muted font-size-sm">Lead web developer</span>
+									</div>
+									<div class="ml-3 align-self-center"><span class="badge badge-mark border-success"></span></div>
+								</li>
+
+								<li class="media">
+									<div class="mr-3">
+										<img src="/global_assets/images/placeholders/placeholder.jpg" width="36" height="36" class="rounded-circle" alt="">
+									</div>
+									<div class="media-body">
+										<a href="#" class="media-title font-weight-semibold">Will Brason</a>
+										<span class="d-block text-muted font-size-sm">Marketing manager</span>
+									</div>
+									<div class="ml-3 align-self-center"><span class="badge badge-mark border-danger"></span></div>
+								</li>
+
+								<li class="media">
+									<div class="mr-3">
+										<img src="/global_assets/images/placeholders/placeholder.jpg" width="36" height="36" class="rounded-circle" alt="">
+									</div>
+									<div class="media-body">
+										<a href="#" class="media-title font-weight-semibold">Hanna Walden</a>
+										<span class="d-block text-muted font-size-sm">Project manager</span>
+									</div>
+									<div class="ml-3 align-self-center"><span class="badge badge-mark border-success"></span></div>
+								</li>
+
+								<li class="media">
+									<div class="mr-3">
+										<img src="/global_assets/images/placeholders/placeholder.jpg" width="36" height="36" class="rounded-circle" alt="">
+									</div>
+									<div class="media-body">
+										<a href="#" class="media-title font-weight-semibold">Dori Laperriere</a>
+										<span class="d-block text-muted font-size-sm">Business developer</span>
+									</div>
+									<div class="ml-3 align-self-center"><span class="badge badge-mark border-warning-300"></span></div>
+								</li>
+
+								<li class="media">
+									<div class="mr-3">
+										<img src="/global_assets/images/placeholders/placeholder.jpg" width="36" height="36" class="rounded-circle" alt="">
+									</div>
+									<div class="media-body">
+										<a href="#" class="media-title font-weight-semibold">Vanessa Aurelius</a>
+										<span class="d-block text-muted font-size-sm">UX expert</span>
+									</div>
+									<div class="ml-3 align-self-center"><span class="badge badge-mark border-grey-400"></span></div>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</li>
+			</ul>
+
+			<span class="badge bg-success-400 badge-pill ml-md-3 mr-md-auto">Online</span>
+
+			<ul class="navbar-nav">
+				<li class="nav-item dropdown dropdown-user">
+					<a href="#" class="navbar-nav-link d-flex align-items-center dropdown-toggle" data-toggle="dropdown">
+						<img src="/global_assets/images/placeholders/placeholder.jpg" class="rounded-circle mr-2" height="34" alt="">
+						<span>{{ auth()->id()  }}</span>
+					</a>
+
+					<div class="dropdown-menu dropdown-menu-right">
+						<a href="{{ route('POprofile') }}" class="dropdown-item"><i class="icon-user-plus"></i> My profile</a>
+						<a href="{{ route('POprofile') }}" class="dropdown-item"><i class="icon-cog5"></i> Account settings</a>
+                        <a class="dropdown-item" href="{{ route('logout') }}"
+                            onclick="event.preventDefault();
+                                        document.getElementById('logout-form').submit();"><i class="icon-switch2"></i>
+                            {{ __('Logout') }}
                         </a>
-                        
-                        <div class="dropdown-menu dropdown-menu-right dropdown-content wmin-md-350">
-                            <div class="dropdown-content-header">
-                                <span class="font-weight-semibold">Messages</span>
-                            </div>
-
-                            <div class="dropdown-content-body dropdown-scrollable">
-                                <ul class="media-list">
-                                    @for ($i = 0; $i < 4; $i++)
-                                        <li class="media">
-                                            <div class="mr-3 position-relative">
-                                                <img src="/global_assets/images/placeholders/placeholder.jpg" width="36" height="36" class="rounded-circle" alt="">
-                                            </div>
-
-                                            <div class="media-body">
-                                                <div class="media-title">
-                                                    <a href="{{ route('POmessages') }}">
-                                                        <span class="font-weight-semibold">{{ 'James Alexander' }}</span>
-                                                        <span class="text-muted float-right font-size-sm">04:58</span>
-                                                    </a>
-                                                </div>
-
-                                                <span class="text-muted">{{ 'who knows, maybe that would be the best thing for me...' }}</span>
-                                            </div>
-                                        </li>
-                                    @endfor
-                                </ul>
-                            </div>
-
-                            <div class="dropdown-content-footer justify-content-center p-0">
-                                <a href="#" class="bg-light text-grey w-100 py-2" data-popup="tooltip" title="" data-original-title="Load more"><i class="icon-menu7 d-block top-0"></i></a>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown dropdown-user">
-                        <a href="#" class="navbar-nav-link d-flex align-items-center dropdown-toggle" data-toggle="dropdown">
-                            <img src="global_assets/images/placeholders/placeholder.jpg" class="rounded-circle mr-2" height="34" alt="">
-                            <span>{{ 'Oxama', '' }}</span>
-                        </a>
-
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <a href="{{ route('POprofile') }}" class="dropdown-item"><i class="icon-user-plus"></i> My profile</a>
-                            <a href="{{ route('POprofile') }}" class="dropdown-item"><i class="icon-cog5"></i> Account settings</a>
-                            <a class="dropdown-item" href="{{ route('logout') }}"
-                               onclick="event.preventDefault();
-                                             document.getElementById('logout-form').submit();"><i class="icon-switch2"></i>
-                                {{ __('Logout') }}
-                            </a>
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                @csrf
-                            </form>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
     <!-- /main navbar -->
-
-
+    
     <!-- Secondary navbar -->
-    <div class="navbar navbar-expand-md navbar-light">
-        <div class="navbar-collapse collapse" id="navbar-navigation">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="navbar-nav-link active">
-                        <i class="icon-home4 mr-2"></i>
-                        Dashboard
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="post-project" class="navbar-nav-link">
-                        <i class="icon-make-group mr-2"></i>
-                        Post Project
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="navbar-nav-link">
-                        <i class="icon-strategy mr-2"></i>
-                        On Going Projects
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
-    <!-- /secondary navbar -->
+	<div class="navbar navbar-expand-md navbar-light">
+		<div class="text-center d-md-none w-100">
+			<button type="button" class="navbar-toggler dropdown-toggle" data-toggle="collapse" data-target="#navbar-navigation">
+				<i class="icon-unfold mr-2"></i>
+				Navigation
+			</button>
+		</div>
+
+		<div class="navbar-collapse collapse" id="navbar-navigation">
+			<ul class="navbar-nav">
+				<li class="nav-item">
+					<a href="index.html" class="navbar-nav-link active">
+						<i class="icon-home4 mr-2"></i>
+						Dashboard
+					</a>
+				</li>
+
+				<li class="nav-item nav-item-levels mega-menu-full">
+					<a href="#" class="navbar-nav-link dropdown-toggle" data-toggle="dropdown">
+						<i class="icon-make-group mr-2"></i>
+						Projects
+					</a>
+
+					<div class="dropdown-menu dropdown-content" style="width: 20%;">
+						<div class="dropdown-content-body">
+							<div class="font-size-sm line-height-sm font-weight-semibold text-uppercase mt-1">Main Panel</div>
+                                <div class="dropdown-divider mb-2"></div>
+                                <div class="dropdown-item-group mb-3 mb-md-0">
+                                    <ul class="list-unstyled">
+                                        <li>
+                                            <a href="{{ route('PostProject') }}" class="dropdown-item rounded"><i class="icon-copy"></i> Post New Project</a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="dropdown-item rounded"><i class="icon-color-sampler"></i> Active Projects</a>
+                                        </li>
+                                        <li>
+                                            <a href="" class="dropdown-item rounded">
+                                                <i class="icon-width"></i>
+                                                Developer Requests
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<!-- /secondary navbar -->
 
     <!-- Page content -->
     <div class="page-content pt-0">
@@ -174,23 +228,32 @@
 
 	</div>
 	<!-- /page content -->
+    <div id="app"></div>
+    
+    
+    <!-- Footer -->
+	<div class="navbar navbar-expand-lg navbar-light">
+		<div class="text-center d-lg-none w-100">
+			<button type="button" class="navbar-toggler dropdown-toggle" data-toggle="collapse" data-target="#navbar-footer">
+				<i class="icon-unfold mr-2"></i>
+				Footer
+			</button>
+		</div>
 
+		<div class="navbar-collapse collapse" id="navbar-footer">
+			<span class="navbar-text">
+				<a href="{{ route('default') }}">&copy; G-Hire 2019. All Rights Reserved.</a>
+			</span>
 
-	<!-- Footer -->
-  	<footer id="footer">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="text-center">
-                                <p>&copy; G-Hire 2019. All Rights Reserved.</p>
-                                <a target="_blank" href="http://www.themeum.com">Privacy Policy</a> |
-                                <a target="_blank" href="http://www.themeum.com">Terms of Services</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </footer>
-	<!-- /footer -->        
+			<ul class="navbar-nav ml-lg-auto">
+				<li class="nav-item"><a href="#" class="navbar-nav-link" target="_blank"><i class="icon-lifebuoy mr-2"></i> Privacy Policy</a></li>
+				<li class="nav-item"><a href="#" class="navbar-nav-link" target="_blank"><i class="icon-file-text2 mr-2"></i> Terms of Services</a></li>
+			</ul>
+		</div>
+	</div>
+	<!-- /footer -->
+    
+    <!--<script src="{{ asset('js/app.js') }}"></script> -->
     <script type="text/javascript">
         document.getElementById("account-settings").style.display = "none";
         $(document).ready(function(){
@@ -216,7 +279,7 @@
                         url: route,
                         data: form_data.serialize(),
                         success: function(Response){
-                            console.log(Response);
+                            //console.log(Response);
                             $('#text').val('');
                             var today = new Date();
                             var li = $('<li class="media"></li>');
@@ -225,7 +288,9 @@
                         }
                     });
                     e.preventDefault();
-                }); 
+                });
+                var messageBody = document.querySelector('#messageBody');
+                messageBody.scrollTop = messageBody.scrollHeight - messageBody.clientHeight; 
             });
     </script>
 </body>

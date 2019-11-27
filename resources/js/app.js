@@ -29,4 +29,14 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 
 const app = new Vue({
     el: '#app',
+    created(){
+        Echo.private('testChannel')
+        .listen('messagesEvent', (e) => {
+            console.log(e.to);
+            var today = new Date();
+            var li = $('<li class="media media-chat-item-reverse"></li>');
+            li.html('<div class="media-body"><div class="media-chat-item">' + e.message + '</div><div class="font-size-sm text-muted mt-2">' + today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate() + ' ' + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds() +'<a href="#"><i class="icon-pin-alt ml-2 text-muted"></i></a></div></div><div class="ml-3"><a href="#"><img src="/global_assets/images/placeholders/placeholder.jpg" class="rounded-circle" width="40" height="40" alt=""></a></div>');            
+            $("#chat_list").append(li);
+        });
+    }
 });

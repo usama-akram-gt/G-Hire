@@ -47,7 +47,7 @@
 								@foreach($users[$i] as $user)
 									<div class="tab-pane fade @if($i === 0){{ 'active','' }}@endif show" id="{{ $user->id,'' }}">
 										@if(!in_array($user->email, $checking_duplicates, TRUE))
-										<div style="overflow-y: auto; height: 300px; width:1250px; float: left;">								
+										<div id="messageBody" style="overflow-y: auto; height: 300px; width:1250px; float: left;">								
 											<ul id="chat_list" class="media-list media-chat mb-3">
 												@for ($j = 0; $j < count($messages); $j++)
 													@foreach($messages[$j] as $message)

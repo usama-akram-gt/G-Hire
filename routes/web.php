@@ -1,4 +1,5 @@
 <?php
+use App\Events\messagesEvent;
 
 /*
 |--------------------------------------------------------------------------
@@ -88,3 +89,11 @@ Route::get('/ProductOwner/profile', function () {
 Route::get('/ProductOwner/messages', 'ContactsController@get')->name('POmessages');
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('messageEvent',function(){
+    event(new messagesEvent('Hello, How are you?'));
+});
+
+Route::get('listenMessage',function(){
+    return view('listen');
+});
