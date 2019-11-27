@@ -1,3 +1,10 @@
+@if (Auth::check())
+    @if (Auth::user()->usertype === 'Developer')
+        <script> window.location="{{ route('dashboard') }}"</script>
+    @else
+        <script> window.location="{{ route('dashboard') }}"</script>
+    @endif
+@endif 
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -61,7 +68,7 @@
     <div class="navbar navbar-expand-md">
         <div class="container">
             <div class="navbar-brand">
-                <a href="/index.php" class="d-inline-block">
+                <a href="{{ route('default') }}" class="d-inline-block">
                     <h1>G-Hire</h1>
                 </a>
             </div>
@@ -75,7 +82,7 @@
                         </a>
                     </li>
                     <li class="nav-item dropdown dropdown-user">
-                        <a href="{{ route('loggingin') }}" class="navbar-nav-link d-flex align-items-center">
+                        <a href="{{ route('login') }}" class="navbar-nav-link d-flex align-items-center">
                             <span>SIGN-IN</span>
                         </a>
                     </li>

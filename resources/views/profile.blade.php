@@ -1,4 +1,4 @@
-@extends('layouts/POmaster')    	
+@extends('layouts/app')    	
 	
 @section('body')
 	<h1 id="main-text">Profile</h1>

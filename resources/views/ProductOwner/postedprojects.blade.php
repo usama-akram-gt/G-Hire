@@ -1,0 +1,206 @@
+@extends('layout/app')
+
+
+@section('body')
+	<!-- Apply to project -->
+	<h1 id="main-text">Posted Projects</h1>
+	<div class="d-md-flex align-items-md-start">
+
+					<!-- Left sidebar component -->
+					
+					<!-- /left sidebar component -->
+
+
+					<!-- Right content -->
+					
+					<div class="flex-fill overflow-auto">
+
+						<!-- Cards layout -->
+						@foreach($data as $value)
+						<div class="card card-body">
+							<div class="media flex-column flex-sm-row">
+								<div class="mr-sm-3 mb-2 mb-sm-0">
+									<a href="#">
+										<img src="../global_assets/images/placeholders/placeholder.jpg" class="rounded" width="44" height="44" alt="">
+									</a>
+								</div>
+
+								<div class="media-body">
+									<h6 class="media-title font-weight-semibold">
+										<a href="#" id="view" data-pid="{{ $value->project_id }}" data-type="{{ $value->type }}" data-file="{{ $value->file }}" data-title="{{ $value->title }}" data-payment="{{ $value->payment }}" data-description="{{ $value->description }}" data-requirement="{{ $value->requirement }}" data-toggle="modal" data-target="#modal_full">{{ $value->title }}</a>
+									</h6>
+
+									<ul class="list-inline list-inline-dotted text-muted mb-2">
+										<li class="list-inline-item"><a href="#" class="text-muted">{{ $value->type }}</a></li>
+										<li class="list-inline-item">$ {{ $value->payment }}</li>
+									</ul>
+
+									{{ $value->description }}
+								</div>
+
+								<div class="ml-sm-3 mt-2 mt-sm-0">
+									<span class="badge bg-blue">New</span>
+								</div>
+							</div>
+							<div align="right">
+							<button type="button" value="{{$value->project_id}}" class="listbtn" class="btn bg-primary" >View Developer's List</button>
+							<button type="button" data-pid="{{ $value->project_id }}" data-type="{{ $value->type }}" data-file="{{ $value->file }}" data-title="{{ $value->title }}" data-payment="{{ $value->payment }}" data-description="{{ $value->description }}" data-requirement="{{ $value->requirement }}"  class="btn bg-primary" data-toggle="modal" data-target="#modal_full">Edit</button>
+							</div>
+						</div>
+						<!-- remove from below-->
+						@endforeach
+						
+						
+						<!-- /cards layout -->
+
+
+						<!-- Pagination -->
+						<div class="d-flex justify-content-center pt-3 mb-3">
+							<ul class="pagination">
+								<li class="page-item"><a href="#" class="page-link"><i class="icon-arrow-small-right"></i></a></li>
+								<li class="page-item active"><a href="#" class="page-link">1</a></li>
+								<li class="page-item"><a href="#" class="page-link">2</a></li>
+								<li class="page-item"><a href="#" class="page-link">3</a></li>
+								<li class="page-item"><a href="#" class="page-link">4</a></li>
+								<li class="page-item"><a href="#" class="page-link">5</a></li>
+								<li class="page-item"><a href="#" class="page-link"><i class="icon-arrow-small-left"></i></a></li>
+							</ul>
+						</div>
+						<!-- /pagination -->
+
+					</div>
+					<!-- /right content  -->
+
+
+
+					<!-- Full Modal -->
+					<div id="modal_full" class="modal fade show" tabindex="-1">
+						<div class="modal-dialog modal-full">
+							<form action="/editProject" method="post" id="editjobform">
+										@csrf
+							<div class="modal-content">
+								<div class="modal-header">
+									<div class="media flex-column flex-md-row mb-4">
+									
+								
+									<div class="media-body">
+											
+									</div>
+								</div>
+									<button type="button" class="close" data-dismiss="modal">×</button>
+								</div>
+							 
+								<div class="modal-body">
+									<div class="mb-4">
+									<div class="form-group">
+									<a href="#" class="align-self-md-center mr-md-3 mb-2 mb-md-0">
+										<img src="../global_assets/images/placeholders/placeholder.jpg" id="file" name="file" class="rounded" width="44" height="44" alt="">
+									</a>
+									</div>
+									<div class="form-group">
+									<h6  class="font-weight-semibold">Choose a File</h6>
+									<input type="file" class="form-input-styled" data-fouc="" name="file">
+									</div>
+									<div class="form-group">
+									<h6  class="font-weight-semibold">Title</h6>
+												<input type="text" name="title" id="title" class="form-control" placeholder="$5000 max">
+											</div>
+											<div class="form-group">
+											<h6  class="font-weight-semibold">Payment</h6>
+												<input type="text" name="payment" id="payment" class="form-control" placeholder="$5000 max">
+											</div>
+											<div class="form-group">
+										<h6  class="font-weight-semibold">Job Description</h6>
+										<textarea id="description" rows="5" cols="5" class="form-control" name="description"></textarea>
+										</div>
+										<div class="form-group">
+										<h6  class="font-weight-semibold">Job Requirements</h6>
+										<textarea id="requirement" rows="5" cols="5" class="form-control" name="requirement"></textarea>
+										</div>
+									</div>
+
+									<div class="mb-4">
+
+
+
+									<div class="form-group">
+									<h6  class="font-weight-semibold">Choose Catagory</h6>
+										<select name="type" id="type" class="form-control form-control-select2 select2-hidden-accessible" data-fouc="" tabindex="-1" aria-hidden="true">
+											<optgroup label="Programming & Tech">
+												<option value="Web Programming">Web Programming</option>
+												<option value="Website Builders & CMS">Website Builders & CMS</option>
+												<option value="mobile app">Mobile Applications</option>
+												<option value="game dev">Game Development</option>
+												<option value="desktop app">Desktop Application</option>
+											</optgroup>
+										</select>
+									</div>
+
+											<hr>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+												
+												<button type="submit" class="btn bg-primary"><i class="icon-envelop2 mr-2"></i>Save the Changes</button>
+											</div>
+										
+									</div>
+								</div>
+							</div>
+							</form>
+						</div>
+					</div>
+
+					<!-- Full Modal -->
+	</div>
+	<!-- /Apply to project -->
+
+
+
+<script type="text/javascript">
+	$('#modal_full').on('show.bs.modal',function(e)
+	{
+		var link=$(e.relatedTarget)
+		var pid=link.data('pid')
+		var title=link.data('title')
+		var payment=link.data('payment')
+		var description=link.data('description')
+		var requirement=link.data('requirement')
+		var file=link.data('file')
+		var type=link.data('type')
+
+		var modal=$(this)
+		modal.find('#title').val(title)
+		modal.find('#type').val(type)
+		modal.find('#payment').val(payment)
+    	modal.find('#description').val(description)
+		modal.find('#requirement').val(requirement)
+		modal.find('#file').val(file)
+
+		$('#editjobform').attr('action','/editProject/'+pid);
+	});
+</script>
+
+<script type='text/javascript'>
+$(document).ready(function() {
+	$(".listbtn").on('click',function(){
+		var pid= $(this).attr('value');
+  //this will find the selected website
+  var go_to_url = '/showemplist/'+pid;
+  
+  //this will redirect us in same window
+  document.location.href = go_to_url;
+});
+});
+</script>
+
+<script type='text/javascript'>
+ function open(var pid)
+ {
+	var go_to_url = '/showemplist/'+pid;
+  
+  //this will redirect us in same window
+  document.location.href = go_to_url;	
+ }
+
+</script>
+@endsection

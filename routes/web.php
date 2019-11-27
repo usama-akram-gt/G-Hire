@@ -1,3 +1,6 @@
+ 
+
+
 <?php
 use App\Events\messagesEvent;
 
@@ -25,30 +28,26 @@ Auth::routes(['verify' => true]);
 
 Route::get('/Developer', function () {
     return view('Developer.Dashboard');
-})->name('Devdashboard');
+})->name('Devdashboard')->middleware('auth');
 
-Route::get('/Developer/ApplyToProject', function () {
-    return view('Developer.applytoprojects');
-})->name('ApplyToProject');
+Route::get('/Developer/ApplyToProject', 'Projects@index')->name('ApplyToProject')->middleware('auth');
 
-Route::get('/Developer/profile', function () {
-    return view('Developer.profile');
-})->name('Devprofile');
+Route::get('/user/profile', 'Profile@index')->name('profile')->middleware('auth');
 
 Route::get('/Developer/messages', function () {
     return view('Developer.messages');
-})->name('Devmessages');
+})->name('Devmessages')->middleware('auth');
 
 
 
 //Default Main Route
 Route::get('/', function () {
-    return view('index');
+    return view('welcome');
 })->name('default');
 
-Route::get('/loggingin', function () {
-    return view('auth.loggingin');
-})->name('loggingin');
+Route::get('/login', function () {
+    return view('auth.login');
+})->name('login');
 
 Route::get('/register/PO', function () {
     return view('auth.POregister');
@@ -58,7 +57,9 @@ Route::get('/register/Dev', function () {
     return view('auth.Devregister');
 })->name('Devregister');
 
-Route::get('/registerDeveloper', 'Auth\RegisterDeveloperController@create')->name('registerDeveloper');
+Route::get('/registerDeveloper', 'Auth\RegisterDeveloperController@create');
+
+Route::get('/ShowMessages', 'ContactsController@get')->name('showmessages');
 
 Route::get('/passwordrecovery', function () {
     return view('auth.passwordrecovery');
@@ -74,26 +75,12 @@ Route::post('/conversation/send', 'ContactsController@send')->name('sendMessage'
 
 
 //Product Owner Routes
-Route::get('/ProductOwner', function () {
-    return view('ProductOwner.Dashboard');
-})->name('POdashboard');
+Route::get('/user', 'Dashboard@index')->name('dashboard')->middleware('auth');
 
 Route::get('/ProductOwner/PostProject', function () {
     return view('ProductOwner.postproject');
-})->name('PostProject');
+})->name('PostProject')->middleware('auth');
 
 Route::get('/ProductOwner/profile', function () {
     return view('ProductOwner.profile');
-})->name('POprofile');
-
-Route::get('/ProductOwner/messages', 'ContactsController@get')->name('POmessages');
-
-Route::get('/home', 'HomeController@index')->name('home');
-
-Route::get('messageEvent',function(){
-    event(new messagesEvent('Hello, How are you?'));
-});
-
-Route::get('listenMessage',function(){
-    return view('listen');
-});
+})->name('POprofile')->middleware('auth');

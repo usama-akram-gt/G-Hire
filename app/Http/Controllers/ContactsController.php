@@ -14,8 +14,6 @@ class ContactsController extends Controller
     public function get()
     {
         // get all users who has a chat with the user and messages are unread
-        //$contacts = Message::select('to')->where('from', '=', auth()->id())->get();
-
         $contacts = array();
         $contacts[] = Message::select('to',DB::raw('COUNT("to") as unread_count'))->where('from', '=', auth()->id())->where('read','=',false)->groupBy('to')->get();
         $contacts[] = Message::select('to',DB::raw('COUNT("to") as read_count'))->where('from', '=', auth()->id())->where('read','=',true)->groupBy('to')->get();
@@ -122,7 +120,7 @@ class ContactsController extends Controller
         //foreach(json_decode($contacts_count) as $contact_count){
           //  print_r($contact_count->to_count . '<br>');
         //} 
-        return view('ProductOwner.messages', compact('contacts','users','messages'));
+        return view('messages', compact('contacts','users','messages'));
     }
 
     public function getMessagesFor($id)
@@ -145,13 +143,12 @@ class ContactsController extends Controller
 
     public function send(Request $request)
     {
-        /*$message = Message::create([
+        $message = Message::create([
             'from' => $request->contact_id,
             'to' => auth()->id(),
             'read' => false,
             'text' => $request->text
         ]);
-        */
         event(new messagesEvent($request->text,$request->contact_id));
         return response()->json(['message' => $request->text,'to' => $request->contact_id],200);
     }

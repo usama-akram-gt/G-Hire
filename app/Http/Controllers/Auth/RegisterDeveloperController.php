@@ -30,7 +30,7 @@ class RegisterDeveloperController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/Developer';
+    protected $redirectTo = '/loggingin';
 
 
     /**
@@ -56,7 +56,7 @@ class RegisterDeveloperController extends Controller
             'fname' => ['required', 'string', 'max:255'],
             'lname' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', 'min:8'],
             'usertype' => ['required', 'string','max:30'],
             'birth_month' => ['required', 'string'],
             'birth_day' => ['required', 'string'],
