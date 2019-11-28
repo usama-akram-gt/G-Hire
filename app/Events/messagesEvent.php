@@ -27,6 +27,7 @@ class messagesEvent implements ShouldBroadcast
     {
         $this->message = $message;
         $this->to = $to;
+        $this->dontBroadcastToCurrentUser();
     }
 
     /**

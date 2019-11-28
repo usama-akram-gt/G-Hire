@@ -4,6 +4,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="csrf-token" content="{{ csrf_token() }}">
 	<title>Developer Name | G-Hire</title>
 
 	<!-- Global stylesheets -->
@@ -215,6 +216,7 @@
 	</div>
 	<!-- /page content -->
 
+	<div id="app"></div>
 
 	<!-- Footer -->
 	<div class="navbar navbar-expand-lg navbar-light">
@@ -237,7 +239,7 @@
 		</div>
 	</div>
 	<!-- /footer -->
-		
+	<!--<script src="/js/app.js"></script>-->	
 	<script type="text/javascript">
 		document.getElementById("account-settings").style.display = "none";
 		$(document).ready(function(){
@@ -263,7 +265,7 @@
 					url: route,
 					data: form_data.serialize(),
 					success: function(Response){
-						//console.log(Response);
+						console.log(Response);
 						$('#text').val('');
 						var today = new Date();
 						var li = $('<li class="media"></li>');
@@ -285,7 +287,7 @@
 					url: route,
 					data: form_data.serialize(),
 					success: function(Response){
-						console.log(Response.title);
+						//console.log(Response.title);
 						$('#Notification').append('<div class="alert alert-info alert-styled-left alert-arrow-left alert-dismissible bg-white mb-4"><button type="button" class="close" data-dismiss="alert"><span>×</span><span class="sr-only">Close</span></button><h6 class="alert-heading font-weight-semibold mb-1">Success,</h6>Posted Project successfully!</div>');
 						//$('#postproject').reset();
 					}
