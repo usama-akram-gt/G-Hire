@@ -1,4 +1,4 @@
-@extends('layout/app')
+@extends('layouts/app',['users',$users])
 
 
 @section('body')
@@ -16,35 +16,31 @@
 					<div class="flex-fill overflow-auto">
 
 						<!-- Cards layout -->
-						@foreach($data as $value)
+						@foreach($data['data'] as $value)
 						<div class="card card-body">
 							<div class="media flex-column flex-sm-row">
 								<div class="mr-sm-3 mb-2 mb-sm-0">
 									<a href="#">
-										<img src="../global_assets/images/placeholders/placeholder.jpg" class="rounded" width="44" height="44" alt="">
+										<img src="/global_assets/images/placeholders/placeholder.jpg" class="rounded" width="44" height="44" alt="">
 									</a>
 								</div>
 
 								<div class="media-body">
 									<h6 class="media-title font-weight-semibold">
-										<a href="#" id="view" data-pid="{{ $value->project_id }}" data-type="{{ $value->type }}" data-file="{{ $value->file }}" data-title="{{ $value->title }}" data-payment="{{ $value->payment }}" data-description="{{ $value->description }}" data-requirement="{{ $value->requirement }}" data-toggle="modal" data-target="#modal_full">{{ $value->title }}</a>
+										<a href="#" id="view" data-id="{{ $value->id }}" data-catagory="{{ $value->catagory }}" data-file="{{ $value->file }}" data-title="{{ $value->title }}" data-budget="{{ $value->budget }}" data-description="{{ $value->description }}" data-toggle="modal" data-target="#modal_full">{{ $value->title }}</a>
 									</h6>
 
 									<ul class="list-inline list-inline-dotted text-muted mb-2">
-										<li class="list-inline-item"><a href="#" class="text-muted">{{ $value->type }}</a></li>
-										<li class="list-inline-item">$ {{ $value->payment }}</li>
+										<li class="list-inline-item"><a href="#" class="text-muted">Catagory: {{ $value->catagory }}</a></li>
+										<li class="list-inline-item">Budget: {{ $value->budget }}</li>
 									</ul>
 
 									{{ $value->description }}
 								</div>
-
-								<div class="ml-sm-3 mt-2 mt-sm-0">
-									<span class="badge bg-blue">New</span>
-								</div>
 							</div>
 							<div align="right">
-							<button type="button" value="{{$value->project_id}}" class="listbtn" class="btn bg-primary" >View Developer's List</button>
-							<button type="button" data-pid="{{ $value->project_id }}" data-type="{{ $value->type }}" data-file="{{ $value->file }}" data-title="{{ $value->title }}" data-payment="{{ $value->payment }}" data-description="{{ $value->description }}" data-requirement="{{ $value->requirement }}"  class="btn bg-primary" data-toggle="modal" data-target="#modal_full">Edit</button>
+							<button type="button" value="{{$value->id}}" class="listbtn" class="btn bg-primary" >View Developer's List</button>
+							<button type="button" data-id="{{ $value->id }}" data-catagory="{{ $value->catagory }}" data-file="{{ $value->file }}" data-title="{{ $value->title }}" data-budget="{{ $value->budget }}" data-description="{{ $value->description }}"  class="btn bg-primary" data-toggle="modal" data-target="#modal_full">Edit</button>
 							</div>
 						</div>
 						<!-- remove from below-->
@@ -52,21 +48,6 @@
 						
 						
 						<!-- /cards layout -->
-
-
-						<!-- Pagination -->
-						<div class="d-flex justify-content-center pt-3 mb-3">
-							<ul class="pagination">
-								<li class="page-item"><a href="#" class="page-link"><i class="icon-arrow-small-right"></i></a></li>
-								<li class="page-item active"><a href="#" class="page-link">1</a></li>
-								<li class="page-item"><a href="#" class="page-link">2</a></li>
-								<li class="page-item"><a href="#" class="page-link">3</a></li>
-								<li class="page-item"><a href="#" class="page-link">4</a></li>
-								<li class="page-item"><a href="#" class="page-link">5</a></li>
-								<li class="page-item"><a href="#" class="page-link"><i class="icon-arrow-small-left"></i></a></li>
-							</ul>
-						</div>
-						<!-- /pagination -->
 
 					</div>
 					<!-- /right content  -->
@@ -77,7 +58,7 @@
 					<div id="modal_full" class="modal fade show" tabindex="-1">
 						<div class="modal-dialog modal-full">
 							<form action="/editProject" method="post" id="editjobform">
-										@csrf
+							@csrf
 							<div class="modal-content">
 								<div class="modal-header">
 									<div class="media flex-column flex-md-row mb-4">
@@ -98,24 +79,16 @@
 									</a>
 									</div>
 									<div class="form-group">
-									<h6  class="font-weight-semibold">Choose a File</h6>
-									<input type="file" class="form-input-styled" data-fouc="" name="file">
-									</div>
-									<div class="form-group">
 									<h6  class="font-weight-semibold">Title</h6>
 												<input type="text" name="title" id="title" class="form-control" placeholder="$5000 max">
 											</div>
 											<div class="form-group">
 											<h6  class="font-weight-semibold">Payment</h6>
-												<input type="text" name="payment" id="payment" class="form-control" placeholder="$5000 max">
+												<input type="text" name="budget" id="budget" class="form-control" placeholder="$5000 max">
 											</div>
 											<div class="form-group">
 										<h6  class="font-weight-semibold">Job Description</h6>
 										<textarea id="description" rows="5" cols="5" class="form-control" name="description"></textarea>
-										</div>
-										<div class="form-group">
-										<h6  class="font-weight-semibold">Job Requirements</h6>
-										<textarea id="requirement" rows="5" cols="5" class="form-control" name="requirement"></textarea>
 										</div>
 									</div>
 
@@ -125,7 +98,7 @@
 
 									<div class="form-group">
 									<h6  class="font-weight-semibold">Choose Catagory</h6>
-										<select name="type" id="type" class="form-control form-control-select2 select2-hidden-accessible" data-fouc="" tabindex="-1" aria-hidden="true">
+										<select name="catagory" id="type" class="form-control form-control-select2 select2-hidden-accessible" data-fouc="" tabindex="-1" aria-hidden="true">
 											<optgroup label="Programming & Tech">
 												<option value="Web Programming">Web Programming</option>
 												<option value="Website Builders & CMS">Website Builders & CMS</option>
@@ -149,7 +122,6 @@
 							</form>
 						</div>
 					</div>
-
 					<!-- Full Modal -->
 	</div>
 	<!-- /Apply to project -->
@@ -160,23 +132,21 @@
 	$('#modal_full').on('show.bs.modal',function(e)
 	{
 		var link=$(e.relatedTarget)
-		var pid=link.data('pid')
+		var id=link.data('id')
 		var title=link.data('title')
-		var payment=link.data('payment')
+		var budget=link.data('budget')
 		var description=link.data('description')
-		var requirement=link.data('requirement')
 		var file=link.data('file')
-		var type=link.data('type')
+		var catagory=link.data('catagory')
 
 		var modal=$(this)
 		modal.find('#title').val(title)
-		modal.find('#type').val(type)
-		modal.find('#payment').val(payment)
+		modal.find('#catagory').val(catagory)
+		modal.find('#budget').val(budget)
     	modal.find('#description').val(description)
-		modal.find('#requirement').val(requirement)
 		modal.find('#file').val(file)
 
-		$('#editjobform').attr('action','/editProject/'+pid);
+		$('#editjobform').attr('action','/editProject/'+id);
 	});
 </script>
 

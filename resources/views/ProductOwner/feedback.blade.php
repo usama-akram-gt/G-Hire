@@ -1,4 +1,4 @@
-@extends('layout/POmaster')
+@extends('layouts/app',['users'=>$users])
 
 
 @section('body')
@@ -61,4 +61,17 @@
 					<!-- /Messages -->
 	</div>
 	<!-- /Post Project -->
+
+	<script type='text/javascript'>
+		$(document).ready(function() {
+			$(".givefeedback").on('click',function(){
+				var id= $(this).attr('value');
+		  //this will find the selected website
+		  var go_to_url = '/postfeedback/'+id;
+		  
+		  //this will redirect us in same window
+		  document.location.href = go_to_url;
+		});
+		});
+	</script>
 @endsection

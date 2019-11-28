@@ -59,148 +59,31 @@
 					<div class="flex-fill overflow-auto">
 
 						<!-- Cards layout -->
-						<div class="card card-body">
-							<div class="media flex-column flex-sm-row">
-								<div class="mr-sm-3 mb-2 mb-sm-0">
-									<a href="#">
-										<img src="../global_assets/images/placeholders/placeholder.jpg" class="rounded" width="44" height="44" alt="">
-									</a>
-								</div>
+						@foreach($projects as $project)
+							<div class="card card-body">
+								<div class="media flex-column flex-sm-row">
+									<div class="mr-sm-3 mb-2 mb-sm-0">
+										<a href="#">
+											<img src="/global_assets/images/placeholders/placeholder.jpg" class="rounded" width="44" height="44" alt="">
+										</a>
+									</div>
 
-								<div class="media-body">
-									<h6 class="media-title font-weight-semibold">
-										<a href="#" data-toggle="modal" data-target="#modal_full">Interaction UX/UI Industrial Designer</a>
-									</h6>
+									<div class="media-body">
+										<h6 class="media-title font-weight-semibold">
+											<a href="#" data-id="{{ $project->id }}" data-title="{{ $project->title }}" data-description="{{ $project->description }}" data-budget="{{ $project->budget }}" data-catagory="{{ $project->catagory }}" data-toggle="modal" data-target="#modal_full">{{ $project->title }}</a>
+										</h6>
 
-									<ul class="list-inline list-inline-dotted text-muted mb-2">
-										<li class="list-inline-item"><a href="#" class="text-muted">Dell</a></li>
-										<li class="list-inline-item">Amsterdam, Netherlands</li>
-									</ul>
+										<ul class="list-inline list-inline-dotted text-muted mb-2">
+											<li class="list-inline-item"><a href="#" class="text-muted">{{ $project->catagory }}</a></li>
+											<li class="list-inline-item">Payment: {{ $project->budget }}</li>
+										</ul>
 
-									Extended kindness trifling remember he confined outlived if. Assistance sentiments yet unpleasing say. Open they an busy they my such high. An active dinner wishes at unable hardly no talked on. Immediate him her resolving his favourite. Wished denote abroad at branch at. Mind what no by kept.
-								</div>
-
-								<div class="ml-sm-3 mt-2 mt-sm-0">
-									<span class="badge bg-blue">New</span>
+										{{ $project->description }}
+									</div>
 								</div>
 							</div>
-						</div><div class="card card-body">
-							<div class="media flex-column flex-sm-row">
-								<div class="mr-sm-3 mb-2 mb-sm-0">
-									<a href="#">
-										<img src="../global_assets/images/placeholders/placeholder.jpg" class="rounded" width="44" height="44" alt="">
-									</a>
-								</div>
-
-								<div class="media-body">
-									<h6 class="media-title font-weight-semibold">
-										<a href="#" data-toggle="modal" data-target="#modal_full">Interaction UX/UI Industrial Designer</a>
-									</h6>
-
-									<ul class="list-inline list-inline-dotted text-muted mb-2">
-										<li class="list-inline-item"><a href="#" class="text-muted">Dell</a></li>
-										<li class="list-inline-item">Amsterdam, Netherlands</li>
-									</ul>
-
-									Extended kindness trifling remember he confined outlived if. Assistance sentiments yet unpleasing say. Open they an busy they my such high. An active dinner wishes at unable hardly no talked on. Immediate him her resolving his favourite. Wished denote abroad at branch at. Mind what no by kept.
-								</div>
-
-								<div class="ml-sm-3 mt-2 mt-sm-0">
-									<span class="badge bg-blue">New</span>
-								</div>
-							</div>
-						</div><div class="card card-body">
-							<div class="media flex-column flex-sm-row">
-								<div class="mr-sm-3 mb-2 mb-sm-0">
-									<a href="#">
-										<img src="../global_assets/images/placeholders/placeholder.jpg" class="rounded" width="44" height="44" alt="">
-									</a>
-								</div>
-
-								<div class="media-body">
-									<h6 class="media-title font-weight-semibold">
-										<a href="#" data-toggle="modal" data-target="#modal_full">Interaction UX/UI Industrial Designer</a>
-									</h6>
-
-									<ul class="list-inline list-inline-dotted text-muted mb-2">
-										<li class="list-inline-item"><a href="#" class="text-muted">Dell</a></li>
-										<li class="list-inline-item">Amsterdam, Netherlands</li>
-									</ul>
-
-									Extended kindness trifling remember he confined outlived if. Assistance sentiments yet unpleasing say. Open they an busy they my such high. An active dinner wishes at unable hardly no talked on. Immediate him her resolving his favourite. Wished denote abroad at branch at. Mind what no by kept.
-								</div>
-
-								<div class="ml-sm-3 mt-2 mt-sm-0">
-									<span class="badge bg-blue">New</span>
-								</div>
-							</div>
-						</div><div class="card card-body">
-							<div class="media flex-column flex-sm-row">
-								<div class="mr-sm-3 mb-2 mb-sm-0">
-									<a href="#">
-										<img src="../global_assets/images/placeholders/placeholder.jpg" class="rounded" width="44" height="44" alt="">
-									</a>
-								</div>
-
-								<div class="media-body">
-									<h6 class="media-title font-weight-semibold">
-										<a href="#" data-toggle="modal" data-target="#modal_full">Interaction UX/UI Industrial Designer</a>
-									</h6>
-
-									<ul class="list-inline list-inline-dotted text-muted mb-2">
-										<li class="list-inline-item"><a href="#" class="text-muted">Dell</a></li>
-										<li class="list-inline-item">Amsterdam, Netherlands</li>
-									</ul>
-
-									Extended kindness trifling remember he confined outlived if. Assistance sentiments yet unpleasing say. Open they an busy they my such high. An active dinner wishes at unable hardly no talked on. Immediate him her resolving his favourite. Wished denote abroad at branch at. Mind what no by kept.
-								</div>
-
-								<div class="ml-sm-3 mt-2 mt-sm-0">
-									<span class="badge bg-blue">New</span>
-								</div>
-							</div>
-						</div><div class="card card-body">
-							<div class="media flex-column flex-sm-row">
-								<div class="mr-sm-3 mb-2 mb-sm-0">
-									<a href="#">
-										<img src="../global_assets/images/placeholders/placeholder.jpg" class="rounded" width="44" height="44" alt="">
-									</a>
-								</div>
-
-								<div class="media-body">
-									<h6 class="media-title font-weight-semibold">
-										<a href="#" data-toggle="modal" data-target="#modal_full">Interaction UX/UI Industrial Designer</a>
-									</h6>
-
-									<ul class="list-inline list-inline-dotted text-muted mb-2">
-										<li class="list-inline-item"><a href="#" class="text-muted">Dell</a></li>
-										<li class="list-inline-item">Amsterdam, Netherlands</li>
-									</ul>
-
-									Extended kindness trifling remember he confined outlived if. Assistance sentiments yet unpleasing say. Open they an busy they my such high. An active dinner wishes at unable hardly no talked on. Immediate him her resolving his favourite. Wished denote abroad at branch at. Mind what no by kept.
-								</div>
-
-								<div class="ml-sm-3 mt-2 mt-sm-0">
-									<span class="badge bg-blue">New</span>
-								</div>
-							</div>
-						</div>
+						@endforeach
 						<!-- /cards layout -->
-
-
-						<!-- Pagination -->
-						<div class="d-flex justify-content-center pt-3 mb-3">
-							<ul class="pagination">
-								<li class="page-item"><a href="#" class="page-link"><i class="icon-arrow-small-right"></i></a></li>
-								<li class="page-item active"><a href="#" class="page-link">1</a></li>
-								<li class="page-item"><a href="#" class="page-link">2</a></li>
-								<li class="page-item"><a href="#" class="page-link">3</a></li>
-								<li class="page-item"><a href="#" class="page-link">4</a></li>
-								<li class="page-item"><a href="#" class="page-link">5</a></li>
-								<li class="page-item"><a href="#" class="page-link"><i class="icon-arrow-small-left"></i></a></li>
-							</ul>
-						</div>
-						<!-- /pagination -->
 
 					</div>
 					<!-- /right content -->
@@ -214,70 +97,53 @@
 								<div class="modal-header">
 									<div class="media flex-column flex-md-row mb-4">
 									<a href="#" class="align-self-md-center mr-md-3 mb-2 mb-md-0">
-										<img src="../global_assets/images/placeholders/placeholder.jpg" class="rounded" width="44" height="44" alt="">
+										<img src="/global_assets/images/placeholders/placeholder.jpg" class="rounded" width="44" height="44" alt="">
 									</a>
 
 									<div class="media-body">
-										<h5 class="media-title font-weight-semibold">Interaction UX/UI Industrial Designer</h5>
+										<h5 id="title" class="media-title font-weight-semibold"></h5>
 										<ul class="list-inline list-inline-dotted text-muted mb-0">
-											<li class="list-inline-item">Utrecht, Netherlands</li>
-											<li class="list-inline-item">3 days ago</li>
+										<li id="id" class="list-inline-item"></li>
+											<li id="catagory" class="list-inline-item"></li>
+											<li id="budget" class="list-inline-item"></li>
 										</ul>
 									</div>
 								</div>
 									<button type="button" class="close" data-dismiss="modal">×</button>
 								</div>
-
+								
 								<div class="modal-body">
 									<div class="mb-4">
-										<h6 class="font-weight-semibold">Job Description</h6>
+										<h6  class="font-weight-semibold">Job Description</h6>
 
-										<p>Named among Fortune’s 2016 World’s Most Admired Companies, Flex offers a world of innovation, learning opportunities, and a strong reputation as environmentally responsible citizens. We are a leading sketch-to-scale™ company that designs and builds intelligent products for a connected world. With more than 200,000 professionals across 30 countries, and a promise to help the world Live smarter™, Flex provides innovative design, engineering, manufacturing, real-time supply chain insight and logistics services to companies of all sizes in various industries and end-markets.</p>
-
-										<p>With more than 100,000 team members globally, we promote an environment that is rooted in the entrepreneurial spirit in which the company was founded. Dell ’ s team members are committed to serving our communities, regularly volunteering for over 1,500 non-profit organizations. The company has also received many accolades from employer of choice to energy conservation. Our team members follow an open approach to technology innovation and believe that technology is essential for human success.</p>
-
-										<p>We are looking for a <strong>Interaction UX/UI Industrial Designer</strong> for our <strong>Product Development</strong> team!</p>
+										<p id="description"></p>
 									</div>
 
 									<div class="mb-4">
-										<form action="#">
+
+										<form action="/applyproject" method="post" id="applyjobform">
+										@csrf
+
 											<div class="form-group">
 												<label>Offer your best to win the project!</label>
-												<textarea rows="5" cols="5" class="form-control" placeholder="Describe Your Offer"></textarea>
+												<textarea name="offerings" rows="5" cols="5" class="form-control" placeholder="Describe Your Offer"></textarea>
 											</div>
-											
-											<hr>
 
 											<div class="form-group">
 												<label>Total Offer Amount</label>
-												<input type="text" class="form-control" placeholder="$5000 max">
+												<input type="text" name="offeramount" class="form-control" placeholder="$5000 max">
 											</div>
-
-											<hr>
 
 											<div class="form-group">
 												<label>How much time will it take you to Complete the Project?</label> <br>
-												<div class="row">
-													<div class="col-md-3">
-														<button type="button" class="btn btn-outline-secondary">24 Hours</button>
-													</div>
-													<div class="col-md-3">
-														<button type="button" class="btn btn-outline-secondary">3 Days</button>
-													</div>
-													<div class="col-md-3">
-														<button type="button" class="btn btn-outline-secondary">7 Days</button>
-													</div>
-													<div class="col-md-3">	
-														<input type="text" class="form-control" placeholder="1-30 Days">
-													</div>
-												</div>
+												<input name="time" type="text" class="form-control" placeholder="1-30 Days">
 											</div>
 
 											<hr>
 											<div class="modal-footer">
 												<button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
-												<button type="button" class="btn btn-light" data-dismiss="modal"><i class="icon-checkmark3 mr-2"></i>Save this job</button>
-												<button type="button" class="btn bg-primary"><i class="icon-envelop2 mr-2"></i>Apply to this Project</button>
+												
+												<button type="submit" class="btn bg-primary"><i class="icon-envelop2 mr-2"></i>Apply to this Project</button>
 											</div>
 										</form>
 									</div>
@@ -287,5 +153,27 @@
 					</div>
 					<!-- Full Modal -->
 	</div>
+
+	<script type="text/javascript">
+		$('#modal_full').on('show.bs.modal',function(e)
+		{
+			var link=$(e.relatedTarget)
+			var id=link.data('id')
+			var title=link.data('title')
+			var budget=link.data('budget')
+			var description=link.data('description')
+			var catagory=link.data('catagory')
+
+			var did=1
+			var modal=$(this)
+			modal.find('#title').text(title)
+			modal.find('#id').text('Project ID: '+id)
+			modal.find('#budget').text('Budget: '+budget)
+			modal.find('#description').text(description)
+			modal.find('#catagory').text('Catagory: ' +catagory)
+	
+			$('#applyjobform').attr('action','/applyproject/'+id+'/'+title);
+		});
+	</script>
 	<!-- /Apply to project -->
 @endsection

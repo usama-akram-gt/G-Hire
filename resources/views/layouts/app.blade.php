@@ -43,6 +43,8 @@
 	<script src="/global_assets/js/demo_pages/user_pages_profile_tabbed.js"></script>
 	<!-- /theme JS files -->
 
+
+
 </head>
 
 <body class="">
@@ -164,7 +166,7 @@
                                         </li>
                                         @if(Auth::user()->usertype === 'ProductOwner')
                                             <li>
-                                                <a href="" class="dropdown-item rounded">
+                                                <a href="{{ route('developerRequests') }}" class="dropdown-item rounded">
                                                     <i class="icon-width"></i>
                                                     Developer Requests
                                                 </a>
@@ -201,16 +203,6 @@
 
 			<!-- Content area -->
 			<div class="content">
-
-				<!-- Email Verification -->
-				@if($user->hasVerifiedEmail())
-					<div class="alert alert-info alert-styled-left alert-arrow-left alert-dismissible bg-white mb-4">
-						<button type="button" class="close" data-dismiss="alert"><span>×</span><span class="sr-only">Close</span></button>
-						<h6 class="alert-heading font-weight-semibold mb-1">Email Verification</h6>
-						It seems like you didn't have yet verified your email. Please, Verify your email!
-					</div>
-				@endif
-				<!-- Email Verification -->
 
 				@yield('body')
 
@@ -283,6 +275,23 @@
 			});
 			var messageBody = document.querySelector('#messageBody');
 			messageBody.scrollTop = messageBody.scrollHeight - messageBody.clientHeight; 
+		});
+		$(document).ready(function(){
+			$('#postproject').submit(function(e){
+				var route = $('#postproject').data('route');
+				var form_data = $(this);
+				$.ajax({
+					type: 'POST',                        
+					url: route,
+					data: form_data.serialize(),
+					success: function(Response){
+						console.log(Response.title);
+						$('#Notification').append('<div class="alert alert-info alert-styled-left alert-arrow-left alert-dismissible bg-white mb-4"><button type="button" class="close" data-dismiss="alert"><span>×</span><span class="sr-only">Close</span></button><h6 class="alert-heading font-weight-semibold mb-1">Success,</h6>Posted Project successfully!</div>');
+						//$('#postproject').reset();
+					}
+				});
+				e.preventDefault();
+			});
 		});
     </script>	
 </body>

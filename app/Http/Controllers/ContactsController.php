@@ -143,13 +143,27 @@ class ContactsController extends Controller
 
     public function send(Request $request)
     {
+        /*
         $message = Message::create([
             'from' => $request->contact_id,
             'to' => auth()->id(),
             'read' => false,
             'text' => $request->text
         ]);
+        */
         event(new messagesEvent($request->text,$request->contact_id));
         return response()->json(['message' => $request->text,'to' => $request->contact_id],200);
+    }
+
+    public function initailsend(Request $request,$id)
+    {
+        $message = Message::create([
+            'from' => $id,
+            'to' => auth()->id(),
+            'read' => false,
+            'text' => $request->text
+        ]);
+        event(new messagesEvent($request->text,$request->contact_id));
+        return back();
     }
 }

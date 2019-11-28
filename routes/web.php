@@ -38,6 +38,9 @@ Route::get('/Developer/messages', function () {
     return view('Developer.messages');
 })->name('Devmessages')->middleware('auth');
 
+Route::post('/applyproject/{id}/{title}','Projects@applyForProject');
+
+Route::get('/ProductOwner/postedprojects', 'Projects@getPostedProjects')->name('developerRequests');   //get posted projects list
 
 
 //Default Main Route
@@ -57,7 +60,7 @@ Route::get('/register/Dev', function () {
     return view('auth.Devregister');
 })->name('Devregister');
 
-Route::get('/registerDeveloper', 'Auth\RegisterDeveloperController@create');
+Route::get('/registerDeveloper', 'Auth\RegisterDeveloperController@create')->name('registerDeveloper');
 
 Route::get('/ShowMessages', 'ContactsController@get')->name('showmessages');
 
@@ -71,16 +74,30 @@ Route::get('/conversation/{id}', 'ContactsController@getMessagesFor')->name('Get
 
 Route::post('/conversation/send', 'ContactsController@send')->name('sendMessage');
 
+Route::post('/conversation/send/{id}', 'ContactsController@initailsend');
 
 
 
 //Product Owner Routes
 Route::get('/user', 'Dashboard@index')->name('dashboard')->middleware('auth');
 
-Route::get('/ProductOwner/PostProject', function () {
-    return view('ProductOwner.postproject');
-})->name('PostProject')->middleware('auth');
+Route::get('/ProductOwner/PostProject', 'Projects@postproject')->name('PostProject')->middleware('auth');
+
+Route::post('/ProductOwner/PostNewProject', 'Projects@postnewproject')->name('PostNewProject')->middleware('auth');
+
 
 Route::get('/ProductOwner/profile', function () {
     return view('ProductOwner.profile');
 })->name('POprofile')->middleware('auth');
+
+//editProject/
+Route::post('/editProject/{id}','Projects@editProject');
+
+//developer's list
+Route::get('/showemplist/{pid}','Projects@getEmployeeList')->name('emplist');
+
+
+Route::get('/ProductOwner/feedback','feedback@givefeedback');
+
+//postfeedback 
+Route::post('/postfeedback/{id}','feedback@storeFeedback')->name('postfeedback');
