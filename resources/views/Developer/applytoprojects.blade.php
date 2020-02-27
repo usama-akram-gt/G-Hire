@@ -70,7 +70,7 @@
 
 									<div class="media-body">
 										<h6 class="media-title font-weight-semibold">
-											<a href="#" data-id="{{ $project->id }}" data-title="{{ $project->title }}" data-description="{{ $project->description }}" data-budget="{{ $project->budget }}" data-catagory="{{ $project->catagory }}" data-toggle="modal" data-target="#modal_full">{{ $project->title }}</a>
+											<a href="#" id="{{ $project->id }}" data-id="{{ $project->id }}" data-title="{{ $project->title }}" data-description="{{ $project->description }}" data-budget="{{ $project->budget }}" data-catagory="{{ $project->catagory }}" data-toggle="modal" data-target="#modal_full">{{ $project->title }}</a>
 										</h6>
 
 										<ul class="list-inline list-inline-dotted text-muted mb-2">
@@ -79,6 +79,10 @@
 										</ul>
 
 										{{ $project->description }}
+									</div>
+
+									<div>
+										<button type="submit" id="giveTest" class="btn bg-primary" data-id="{{ $project->id }}" data-title="{{ $project->title }}" data-description="{{ $project->description }}" data-budget="{{ $project->budget }}" data-catagory="{{ $project->catagory }}" data-tags="{{ $project->tags }}"><i class="icon-envelop2 mr-2"></i>Apply</button>
 									</div>
 								</div>
 							</div>
@@ -89,6 +93,78 @@
 					<!-- /right content -->
 
 
+					<!-- MCQ Modal -->
+					<div id="modal_mcq" class="modal fade show" tabindex="-1">
+						<div class="modal-dialog modal-full">
+							<div class="modal-content">
+								<div class="modal-header">
+									<div class="media flex-column flex-md-row mb-4">
+										<div class="media-body">
+											<h5 id="id" hidden=""></h5>
+											<h5 id="title" class="media-title font-weight-semibold"></h5>
+										</div>
+									</div>
+									<button type="button" class="close" data-dismiss="modal">×</button>
+								</div>
+								
+								<div class="modal-body">
+
+									<div id="Initial">
+										<form action="/startTest" method="get" id="startTest">
+										@csrf
+											<ul class="list-inline text-muted">
+												<li class="list-inline-item"><h6>This test will be a <b>MCQ base</b> where you need to score <i>80% out of 100</i>  to put your bid on the project</h6></li>
+												<li class="list-inline-item"><button type="submit" class="btn bg-primary" onclick="startTest();"><i class="icon-envelop2 mr-2"></i>Continue Test</button></li>
+											</ul>
+										</form>
+									</div>
+
+
+									<div class="mb-4" id="testPhase">
+										<form action="/testResult" method="post" id="testResult">
+										@csrf
+
+											<div class="form-group mb-3 mb-md-2">
+												<label class="d-block font-weight-semibold">1- What does HTML stand for?</label>
+												<div class="form-check form-check-inline">
+													<label class="form-check-label">
+														<input type="radio" class="form-check-input-styled" name="radio-inline-left" data-fouc="">
+														Hyperlinks and Text Markup Language
+													</label>
+												</div>
+												<div class="form-check form-check-inline">
+													<label class="form-check-label">
+														<input type="radio" class="form-check-input-styled" name="radio-inline-left" data-fouc="">
+														Home Tool Markup Language
+													</label>
+												</div>
+												<div class="form-check form-check-inline">
+													<label class="form-check-label">
+														<input type="radio" class="form-check-input-styled" name="radio-inline-left" data-fouc="">
+														Hyperlinks text Markup Language
+													</label>
+												</div>
+												<div class="form-check form-check-inline">
+													<label class="form-check-label">
+														<input type="radio" class="form-check-input-styled" name="radio-inline-left" data-fouc="">
+														Hyper Text Markup Language 
+													</label>
+												</div>
+											</div>
+											<hr>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+												<button type="submit" class="btn bg-primary"><i class="icon-envelop2 mr-2"></i>Submit Test</button>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- MCQ Modal -->
+
+
 
 					<!-- Full Modal -->
 					<div id="modal_full" class="modal fade show" tabindex="-1">
@@ -96,19 +172,19 @@
 							<div class="modal-content">
 								<div class="modal-header">
 									<div class="media flex-column flex-md-row mb-4">
-									<a href="#" class="align-self-md-center mr-md-3 mb-2 mb-md-0">
-										<img src="/global_assets/images/placeholders/placeholder.jpg" class="rounded" width="44" height="44" alt="">
-									</a>
+										<a href="#" class="align-self-md-center mr-md-3 mb-2 mb-md-0">
+											<img src="/global_assets/images/placeholders/placeholder.jpg" class="rounded" width="44" height="44" alt="">
+										</a>
 
-									<div class="media-body">
-										<h5 id="title" class="media-title font-weight-semibold"></h5>
-										<ul class="list-inline list-inline-dotted text-muted mb-0">
-										<li id="id" class="list-inline-item"></li>
-											<li id="catagory" class="list-inline-item"></li>
-											<li id="budget" class="list-inline-item"></li>
-										</ul>
+										<div class="media-body">
+											<h5 id="title" class="media-title font-weight-semibold"></h5>
+											<ul class="list-inline list-inline-dotted text-muted mb-0">
+												<li id="id" class="list-inline-item"></li>
+												<li id="catagory" class="list-inline-item"></li>
+												<li id="budget" class="list-inline-item"></li>
+											</ul>
+										</div>
 									</div>
-								</div>
 									<button type="button" class="close" data-dismiss="modal">×</button>
 								</div>
 								
@@ -174,6 +250,19 @@
 	
 			$('#applyjobform').attr('action','/applyproject/'+id+'/'+title);
 		});
+
+
+		$('#giveTest').click(function() {
+		    var id = $(this).data('id');      
+		    var title=$(this).data('title')
+			var budget=$(this).data('budget')
+			var description=$(this).data('description')
+			var catagory=$(this).data('catagory')
+			var tags=$(this).data('tags')
+
+			window.location.href = '/startTest/' + id + '/' + catagory + '/';
+		});
+
 	</script>
 	<!-- /Apply to project -->
 @endsection

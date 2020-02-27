@@ -34,7 +34,7 @@
 							</div>
 							<div align="right">
 							<button data-toggle="modal" data-target="#modal_message" data-id="{{ $value->id }}" type="button" class="btn bg-primary">Message</button>
-							<button type="button" class="btn bg-primary">Accpet</button>
+							<button type="button" class="btn bg-primary" data-toggle="modal" data-target="#modal_form_vertical">Accpet</button>
 							<button type="button" class="btn bg-primary">Decline</button>
 							<button type="button" class="givefeedback" data-id="{{ $value->id }}"  data-toggle="modal" data-target="#modal_full" class="btn bg-primary">Give Feedback</button>
 							</div>
@@ -144,6 +144,74 @@
 						</div>
 					</div>
 					<!-- Message Modal -->
+
+					<div id="modal_form_vertical" class="modal fade show">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title">Payment Details (Pay and get started with this Developer)</h5>
+									<button type="button" class="close" data-dismiss="modal">×</button>
+								</div>
+
+								<form action="#">
+									<div class="modal-body">
+										<div class="form-group">
+											<div class="row">
+												<div class="col-sm-4">
+													<label>Card Name</label>
+													<input type="text" placeholder="Eugene" class="form-control">
+												</div>
+												<div class="col-sm-8">
+												<label>Email</label>
+												<input type="text" placeholder="eugene@kopyov.com" class="form-control">
+												<span class="form-text text-muted">name@domain.com</span>
+											</div>
+											</div>
+										</div>
+
+										<div class="form-group">
+											<div class="row">
+												<div class="col-sm-12">
+													<label>Address line *</label>
+													<input type="text" placeholder="Ring street 12" class="form-control">
+												</div>
+											</div>
+										</div>
+
+										<div class="form-group">
+											<div class="row">
+												<div class="col-sm-8">
+													<label>Card Number</label>
+													<input type="text" placeholder="9999-9999-9999-9999" data-mask="9999-9999-9999-9999" class="form-control">
+												</div>
+												<div class="col-sm-4">
+													<label>CVV</label>
+													<input type="text" placeholder="111" data-mask="999" class="form-control">
+												</div>
+											</div>
+										</div>
+
+										<div class="form-group">
+											<div class="row">
+												<div class="col-sm-2">
+													<label>Expiry Date</label>
+													<div class="btn-group">
+														<input type="text" placeholder="Month" data-mask="99" class="form-control">
+														<input type="text" placeholder="Year" data-mask="9999" class="form-control">
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="modal-footer">
+										<button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+										<button type="submit" class="btn bg-primary">Submit form</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
 					
 	</div>
 	<!-- /Apply to project -->

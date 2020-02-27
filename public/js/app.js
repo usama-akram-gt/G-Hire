@@ -59289,8 +59289,8 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.Pusher = __webpack_require__(/*! pusher-js */ "./node_modules/pusher-js/dist/web/pusher.js");
 window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   broadcaster: 'pusher',
-  key: "9544f09cd9c74ec03144",
-  cluster: "ap2",
+  key: "",
+  cluster: "mt1",
   encrypted: true
 });
 
@@ -59383,8 +59383,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/abdullah_16f8418/Downloads/G-Hire-Master/G-Hire-Laravel/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/abdullah_16f8418/Downloads/G-Hire-Master/G-Hire-Laravel/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\My Personal\Lectures\Semester 8\FYP-2\G-Hire-Laravel\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\My Personal\Lectures\Semester 8\FYP-2\G-Hire-Laravel\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

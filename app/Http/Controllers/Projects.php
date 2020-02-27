@@ -60,6 +60,27 @@ class Projects extends Controller
     } 
 
 
+    public function startTest(Request $request,$id,$catagory){
+        $contacts = array();
+        $contacts[] = Message::select('to',DB::raw('COUNT("to") as unread_count'))->where('from', '=', auth()->id())->where('read','=',false)->groupBy('to')->get();
+        $contacts[] = Message::select('to',DB::raw('COUNT("to") as read_count'))->where('from', '=', auth()->id())->where('read','=',true)->groupBy('to')->get();
+        $users = array();
+        for ($i = 0; $i < count($contacts); $i++){
+            foreach($contacts[$i] as $contact){
+                $users[] = User::where('id', '=', $contact->to)->get();
+            }   
+        }
+        $projects = DB::table('projects')->where('id','=',$id)->get();
+        $tests = DB::table('tests')->where('catagory','=',$catagory)->inRandomOrder()->limit(10)->get();
+        if(count($projects) > 0 && count($tests) > 0){
+            return view('Developer.tests',compact('users','projects','tests'));
+        }
+        else{
+            return view('Developer.tests',compact('users'));
+        }    
+    } 
+
+
     public function applyForProject(Request $req,$id,$title){   
         $off=$req->input('offerings');
         $offm=$req->input('offeramount');

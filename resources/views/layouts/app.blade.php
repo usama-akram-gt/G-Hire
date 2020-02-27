@@ -42,6 +42,10 @@
 	<script src="/global_assets/js/demo_pages/components_modals.js"></script>
 	<script src="/global_assets/js/demo_pages/form_layouts.js"></script>
 	<script src="/global_assets/js/demo_pages/user_pages_profile_tabbed.js"></script>
+	<script src="/global_assets/js/demo_pages/form_checkboxes_radios.js"></script>
+	<script src="/global_assets/js/demo_pages/form_controls_extended.js"></script>
+	<script src="/global_assets/js/plugins/forms/inputs/maxlength.min.js"></script>
+	<script src="/global_assets/js/plugins/forms/inputs/passy.js"></script>
 	<!-- /theme JS files -->
 
 

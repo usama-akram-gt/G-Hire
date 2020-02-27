@@ -42,6 +42,10 @@ Route::post('/applyproject/{id}/{title}','Projects@applyForProject');
 
 Route::get('/ProductOwner/postedprojects', 'Projects@getPostedProjects')->name('developerRequests');   //get posted projects list
 
+Route::get('/startTest/{id}/{catagory}', 'Projects@startTest')->name('startTest');   //Getting Tests Details
+
+
+
 
 //Default Main Route
 Route::get('/', function () {
