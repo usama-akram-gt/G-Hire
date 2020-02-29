@@ -20,6 +20,8 @@
 `cp .env.exmple .env`
 *   Then set your username and password and run
 `php artisan migrate`
+*   Run the project
+`php artisan serve`
 
 
 
