@@ -243,7 +243,7 @@ var FileUpload = function() {
 
         $('.file-input-ajax').fileinput({
             browseLabel: 'Browse',
-            uploadUrl: "http://localhost", // server upload action
+            uploadUrl: "{{ route('uploadFile') }}", // server upload action
             uploadAsync: true,
             maxFileCount: 5,
             initialPreview: [],

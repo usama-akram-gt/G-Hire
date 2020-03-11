@@ -1,4 +1,4 @@
-@extends('layouts/app',['users',$users])
+@extends('layouts/app',['users'=>$users],['live_projects'=>$live_projects])
 
 
 @section('body')
@@ -39,7 +39,8 @@
 								</div>
 							</div>
 							<div align="right">
-							<button type="button" value="{{$value->id}}" class="listbtn" class="btn bg-primary" >View Developer's List</button>
+							<button type="button" value="{{$value->id}}" cat="{{$value->catagory}}" class="btn bg-primary listbtn2" >View Recommended Developers</button>
+							<button type="button" value="{{$value->id}}" class="btn bg-primary listbtn" >View Developer's List</button>
 							<button type="button" data-id="{{ $value->id }}" data-catagory="{{ $value->catagory }}" data-file="{{ $value->file }}" data-title="{{ $value->title }}" data-budget="{{ $value->budget }}" data-description="{{ $value->description }}"  class="btn bg-primary" data-toggle="modal" data-target="#modal_full">Edit</button>
 							</div>
 						</div>
@@ -161,6 +162,20 @@ $(document).ready(function() {
   document.location.href = go_to_url;
 });
 });
+</script>
+
+<script type='text/javascript'>
+	$(document).ready(function() {
+		$(".listbtn2").on('click',function(){
+				var pid= $(this).attr('value');
+				var catagory= $(this).attr('cat');
+		  //this will find the selected website
+		  var go_to_url = '/showrecodevlist/'+pid+'/'+catagory;
+		  
+		  //this will redirect us in same window
+		  document.location.href = go_to_url;
+		});
+	});
 </script>
 
 <script type='text/javascript'>

@@ -1,4 +1,4 @@
-@extends('layouts/app',['users'=>$users])
+@extends('layouts/app',['users'=>$users],['live_projects'=>$live_projects])
 
 
 @section('body')

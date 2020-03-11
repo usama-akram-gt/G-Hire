@@ -3,7 +3,7 @@
 
 <?php
 use App\Events\messagesEvent;
-
+use Illuminate\Http\Request;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -44,7 +44,8 @@ Route::get('/ProductOwner/postedprojects', 'Projects@getPostedProjects')->name('
 
 Route::get('/startTest/{id}/{catagory}', 'Projects@startTest')->name('startTest');   //Getting Tests Details
 
-
+//recommended developer's list
+Route::post('/submitProject/{id}','FileController@storeFile')->name('uploadFile');
 
 
 //Default Main Route
@@ -105,3 +106,20 @@ Route::get('/ProductOwner/feedback','feedback@givefeedback');
 
 //postfeedback 
 Route::post('/postfeedback/{id}','feedback@storeFeedback')->name('postfeedback');
+
+//activeProjects
+Route::get('/ProductOwner/ActiveProjects/{id}', 'Projects@activeProjects')->name('ActiveProjects')->middleware('auth');
+
+
+//makePayment
+Route::post('/make/payment/{card_name}/{card_email}/{card_address}/{card_number}/{card_cvv}/{card_month}/{card_year}/{dev_id}/{project_id}/{token}/{offeramount}', 'Payments@makePayment')->name('makePayment')->middleware('auth');
+
+//recommended developer's list
+Route::get('/showrecodevlist/{pid}/{catagory}','RecommendationSystem@startDeveloperRecommendation')->name('recodevlist');
+
+//file downloader
+Route::get('/ProductOwner/downloadFile/{path}/{name}', function(Request $req){
+	$filepath = $req->path;
+	$filename = $req->name;
+	return response()->download(storage_path("app/public/{$filepath}"),$filename);
+})->name('download');

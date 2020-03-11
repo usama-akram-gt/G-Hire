@@ -1,4 +1,4 @@
-@extends('layouts/app',['users'=>$users])
+@extends('layouts/app',['users'=>$users],['live_projects'=>$live_projects])
 
 
 @section('body')
@@ -72,11 +72,11 @@
 								<div class="mb-4" id="testPhase">
 									@foreach($tests as $test)
 									<div class="form-group mb-3 mb-md-2">
-										<label class="d-block font-weight-semibold">{{ $test->qnumber }}-  {{ $test->quest}}</label>
+										<label class="d-block font-weight-semibold" id="{{ $test->qnumber }}">{{ $test->qnumber }}-  {{ $test->quest}}</label>
 										@if ($test->A != '')
 										<div class="form-check form-check-inline">
 											<label class="form-check-label">
-												<input type="radio" value="{{ $test->A }}" class="form-check-input-styled" name="radio-inline-left" data-fouc="">
+												<input type="radio" value="A" class="form-check-input-styled" name="{{ $test->qnumber }}" data-fouc="">
 												{{ $test->A }}
 											</label>
 										</div>
@@ -84,7 +84,7 @@
 										@if ($test->B != '')
 										<div class="form-check form-check-inline">
 											<label class="form-check-label">
-												<input type="radio" value="{{ $test->B }}" class="form-check-input-styled" name="radio-inline-left" data-fouc="">
+												<input type="radio" value="B" class="form-check-input-styled" name="{{ $test->qnumber }}" data-fouc="">
 												{{ $test->B }}
 											</label>
 										</div>
@@ -92,7 +92,7 @@
 										@if ($test->C != '')
 										<div class="form-check form-check-inline">
 											<label class="form-check-label">
-												<input type="radio" value="{{ $test->C }}" class="form-check-input-styled" name="radio-inline-left" data-fouc="">
+												<input type="radio" value="C" class="form-check-input-styled" name="{{ $test->qnumber }}" data-fouc="">
 												{{ $test->C }}
 											</label>
 										</div>
@@ -100,8 +100,15 @@
 										@if ($test->D != '')
 										<div class="form-check form-check-inline">
 											<label class="form-check-label">
-												<input type="radio" value="{{ $test->D }}" class="form-check-input-styled" name="radio-inline-left" data-fouc="">
+												<input type="radio" value="D" class="form-check-input-styled" name="{{ $test->qnumber }}" data-fouc="">
 												{{ $test->D }}
+											</label>
+										</div>
+										@endif
+										@if ($test->ans != '')
+										<div class="form-check form-check-inline">
+											<label class="form-check-label">
+												<input type="text" hidden="" value="{{ $test->ans }}" name="{{ $test->qnumber }}">
 											</label>
 										</div>
 										@endif
@@ -124,14 +131,26 @@
 
 
 		$('#submitTest').click(function() {
-			//if 80%
-			document.getElementById('testPanel').style.display = 'none';
-			document.getElementById('applyPanel').style.display = 'block';
 
 			var id = $('#id').text();
 			var title = $('#title').text();
-			console.log(id);
-			console.log(title.replace('Title: ',''));
+			var count = 0;
+			$("input").each(function() {
+			    var name = $(this).attr("name");
+			    var input_element = "input[name='" + name + "']:checked";
+			    var val = $(input_element).val();
+			    var ans_element = "input[name='" + name + "'][type=text]";
+			    var answer = $(ans_element).val();
+				if(val === answer){
+					count = count + 1;
+				}
+			});
+			if(count >= 8){
+				//if 80%
+				document.getElementById('testPanel').style.display = 'none';
+				document.getElementById('applyPanel').style.display = 'block';
+			}
+			
 			$('#applyjobform').attr('action','/applyproject/'+id+'/'+title);
 		});
 

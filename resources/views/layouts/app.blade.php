@@ -26,6 +26,7 @@
 
 	<!-- Theme JS files -->
 	<script src="/global_assets/js/plugins/visualization/d3/d3.min.js"></script>
+	<script src="/global_assets/js/plugins/forms/inputs/alpaca/alpaca.min.js"></script>
 	<script src="/global_assets/js/plugins/visualization/d3/d3_tooltip.js"></script>
 	<script src="/global_assets/js/plugins/forms/styling/switchery.min.js"></script>
 	<script src="/global_assets/js/plugins/forms/selects/bootstrap_multiselect.js"></script>
@@ -46,6 +47,11 @@
 	<script src="/global_assets/js/demo_pages/form_controls_extended.js"></script>
 	<script src="/global_assets/js/plugins/forms/inputs/maxlength.min.js"></script>
 	<script src="/global_assets/js/plugins/forms/inputs/passy.js"></script>
+	<script src="/global_assets/js/demo_pages/uploader_bootstrap.js"></script>
+	<script src="/global_assets/js/plugins/uploaders/fileinput/fileinput.min.js"></script>
+	<script src="/global_assets/js/plugins/uploaders/fileinput/plugins/sortable.min.js"></script>
+	<script src="/global_assets/js/plugins/uploaders/fileinput/plugins/purify.min.js"></script>
+	<script src="/global_assets/js/demo_pages/alpaca_advanced.js"></script>
 	<!-- /theme JS files -->
 
 
@@ -99,6 +105,44 @@
 									@endforeach
 								@endfor	
 							</ul>
+						</div>
+					</div>
+				</li>
+				<li class="nav-item dropdown">
+					<a href="#" class="navbar-nav-link dropdown-toggle caret-0" data-toggle="dropdown" aria-expanded="false">
+						<i class="icon-git-compare"></i>
+						@if (count($live_projects) > 0)
+							<span class="badge badge-pill bg-warning-400 ml-auto ml-md-0">{{ count($live_projects) }}</span>
+						@endif
+					</a>
+
+					<div class="dropdown-menu dropdown-content wmin-md-350">
+						<div class="dropdown-content-header">
+							<span class="font-weight-semibold">Projects Notifications</span>
+						</div>
+
+						<div class="dropdown-content-body dropdown-scrollable">
+							<ul class="media-list">
+								<li class="media">
+									<div class="mr-3">
+										<a href="#" class="btn bg-transparent border-primary text-primary rounded-round border-2 btn-icon"><i class="icon-git-pull-request"></i></a>
+									</div>
+									@for ($i = 0; $i < count($live_projects); $i++)
+										@foreach($live_projects[$i] as $live_project)
+											<a href="{{ route('ActiveProjects', $live_project->id) }}">
+												<div class="media-body">
+													{{ $live_project->title }}
+													<div class="text-muted font-size-sm">{{ '$'.$live_project->budget }} <b>& Delivery Time: </b> {{ $live_project->deliverytime }}</div>
+												</div>
+											</a>
+										@endforeach
+									@endfor		
+								</li>
+							</ul>
+						</div>
+
+						<div class="dropdown-content-footer bg-light">
+							<a href="#" class="text-grey mr-auto">All hirings</a>
 						</div>
 					</div>
 				</li>
@@ -166,15 +210,12 @@
                                                 <a href="{{ route('PostProject') }}" class="dropdown-item rounded"><i class="icon-copy"></i> Post New Project</a>
                                             </li>
                                         @endif
-                                        <li>
-                                            <a href="#" class="dropdown-item rounded"><i class="icon-color-sampler"></i> Active Projects</a>
-                                        </li>
                                         @if(Auth::user()->usertype === 'ProductOwner')
                                             <li>
                                                 <a href="{{ route('developerRequests') }}" class="dropdown-item rounded">
                                                     <i class="icon-width"></i>
                                                     Developer Requests
-                                                </a>
+                                                </a> 
                                             </li>
 										@endif
 										@if(Auth::user()->usertype === 'Developer')

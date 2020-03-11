@@ -1,4 +1,4 @@
-@extends('layouts/app',['users'=>$users])
+@extends('layouts/app',['users'=>$users],['live_projects'=>$live_projects])
 
 
 @section('body')
@@ -75,14 +75,14 @@
 
 										<ul class="list-inline list-inline-dotted text-muted mb-2">
 											<li class="list-inline-item"><a href="#" class="text-muted">{{ $project->catagory }}</a></li>
-											<li class="list-inline-item">Payment: {{ $project->budget }}</li>
+											<li class="list-inline-item"><span class="text-success ml-auto">{{ 'Payment: $'. $project->budget }}</span></li>
 										</ul>
 
 										{{ $project->description }}
 									</div>
 
 									<div>
-										<button type="submit" id="giveTest" class="btn bg-primary" data-id="{{ $project->id }}" data-title="{{ $project->title }}" data-description="{{ $project->description }}" data-budget="{{ $project->budget }}" data-catagory="{{ $project->catagory }}" data-tags="{{ $project->tags }}"><i class="icon-envelop2 mr-2"></i>Apply</button>
+										<button type="submit" class="btn bg-primary giveTest" data-id="{{ $project->id }}" data-title="{{ $project->title }}" data-description="{{ $project->description }}" data-budget="{{ $project->budget }}" data-catagory="{{ $project->catagory }}" data-tags="{{ $project->tags }}"><i class="icon-envelop2 mr-2"></i>Apply</button>
 									</div>
 								</div>
 							</div>
@@ -252,7 +252,7 @@
 		});
 
 
-		$('#giveTest').click(function() {
+		$('.giveTest').click(function() {
 		    var id = $(this).data('id');      
 		    var title=$(this).data('title')
 			var budget=$(this).data('budget')
