@@ -3,7 +3,7 @@
 
 <?php
 use App\Events\messagesEvent;
-use Illuminate\Http\Request;
+use Illuminate\Http\Request;	
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -105,7 +105,7 @@ Route::get('/showemplist/{pid}','Projects@getEmployeeList')->name('emplist');
 Route::get('/ProductOwner/feedback','feedback@givefeedback');
 
 //postfeedback 
-Route::post('/postfeedback/{id}','feedback@storeFeedback')->name('postfeedback');
+Route::post('/postfeedback/{id}/{pid}','feedback@storeFeedback')->name('postfeedback');
 
 //activeProjects
 Route::get('/ProductOwner/ActiveProjects/{id}', 'Projects@activeProjects')->name('ActiveProjects')->middleware('auth');
@@ -123,3 +123,7 @@ Route::get('/ProductOwner/downloadFile/{path}/{name}', function(Request $req){
 	$filename = $req->name;
 	return response()->download(storage_path("app/public/{$filepath}"),$filename);
 })->name('download');
+
+//Endorsement
+Route::get('/Endorsement/{id}','FileController@filecontrolling')->name('endorsement');
+

@@ -39,7 +39,9 @@ class Dashboard extends Controller
             //now get every developer detail against each live project
             for ($i = 0; $i < count($ongoingprojects); $i++){
                 foreach($ongoingprojects[$i] as $ongoingproject){
-                    $dev_details[] = DB::table('users')->where('id','=',$ongoingproject->dev_id)->get();
+                    $fname = DB::table('users')->where('id','=',$ongoingproject->dev_id)->get('fname');
+                    $lname = DB::table('users')->where('id','=',$ongoingproject->dev_id)->get('lname');
+                    $dev_details = $fname[0]->fname . ' '. $lname[0]->lname;
                     $live_projects[] = DB::table('projects')->where('id','=',$ongoingproject->project_id)->get();
                 }   
             }
@@ -51,8 +53,17 @@ class Dashboard extends Controller
                     $total_invested += $budget[0]->budget;
                 }   
             }            
+            $data=app('App\Http\Controllers\RecommendationSystem')->startDeveloperRecommendationDasboard();
+            foreach($data as $pro)
+            {
+                //$usr=DB::table('users')->where('id','=',$pro->userid_fk)->get();
+                $port=DB::table('portfolios')->where('userid_fk','=',$pro->id)->get();
+            }
+            //dd($port);
+            //exit();
+            return view('dashboard',compact('users','live_projects','dev_details','total_invested','data','port'));
 
-            return view('dashboard',compact('users','live_projects','dev_details','total_invested'));
+            
         }
         if($usertype[0]->usertype == 'Developer'){
             //check on how many he has applied via appliedprojects
@@ -68,11 +79,24 @@ class Dashboard extends Controller
             //now getting product-owner detials and projects details to show
             for ($i = 0; $i < count($ongoingprojects); $i++){
                 foreach($ongoingprojects[$i] as $ongoingproject){
-                    $prodO_details[] = DB::table('users')->where('id','=',$ongoingproject->prodO_id)->get();
+                    $fname = DB::table('users')->where('id','=',$ongoingproject->prodO_id)->get('fname');
+                    $lname = DB::table('users')->where('id','=',$ongoingproject->prodO_id)->get('lname');
+                    $prodO_details = $fname[0]->fname . ' '. $lname[0]->lname;
                     $live_projects[] = DB::table('projects')->where('id','=',$ongoingproject->project_id)->get();
-                }   
+                }
+                $recolist=app('App\Http\Controllers\RecommendationSystem')->startProjectRecommendation();
+                //dd($recolist);
+                foreach($recolist as $val)
+                {
+                    //$usr=DB::table('users')->where('id','=',$pro->userid_fk)->get();
+                    $usr=DB::table('users')->where('id','=',$val->userid_fk)->get();
+                }
+                //dd($usr);
+                //exit();  
             }
-            return view('dashboard',compact('users','live_projects','prodO_details'));
+
+
+            return view('dashboard',compact('users','live_projects','prodO_details','recolist','usr'));
         }
 
 

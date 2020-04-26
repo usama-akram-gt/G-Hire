@@ -37,6 +37,7 @@
 	<script src="/global_assets/js/plugins/notifications/bootbox.min.js"></script>
 	<script src="/global_assets/js/plugins/forms/selects/select2.min.js"></script>
 	<script src="/pages/assets/js/app.js"></script>
+	<script src="/global_assets/js/demo_pages/form_wizard.js"></script>
 	<script src="/global_assets/js/demo_pages/dashboard.js"></script>
 	<script src="/global_assets/js/demo_pages/components_progress.js"></script>
 	<script src="/global_assets/js/demo_pages/job_list.js"></script>
@@ -52,6 +53,32 @@
 	<script src="/global_assets/js/plugins/uploaders/fileinput/plugins/sortable.min.js"></script>
 	<script src="/global_assets/js/plugins/uploaders/fileinput/plugins/purify.min.js"></script>
 	<script src="/global_assets/js/demo_pages/alpaca_advanced.js"></script>
+	<script src="/global_assets/js/plugins/forms/wizards/steps.min.js"></script>
+	<script src="/global_assets/js/plugins/forms/selects/select2.min.js"></script>
+	<script src="/global_assets/js/plugins/forms/styling/uniform.min.js"></script>
+	<script src="/global_assets/js/plugins/forms/inputs/inputmask.js"></script>
+	<script src="/global_assets/js/plugins/forms/validation/validate.min.js"></script>
+	<script src="/global_assets/js/plugins/extensions/cookie.js"></script>
+	<script src="/pages/assets/js/app.js"></script>
+	<script src="/global_assets/js/demo_pages/form_wizard.js"></script>
+	<script src="/global_assets/js/demo_pages/login.js"></script>
+	<script src="/global_assets/js/plugins/forms/inputs/autosize.min.js"></script>
+	<script src="/global_assets/js/plugins/forms/inputs/formatter.min.js"></script>
+	<script src="/global_assets/js/plugins/forms/inputs/typeahead/typeahead.bundle.min.js"></script>
+	<script src="/global_assets/js/plugins/forms/inputs/typeahead/handlebars.min.js"></script>
+	<script src="/global_assets/js/plugins/forms/inputs/passy.js"></script>
+	<script src="/global_assets/js/plugins/forms/inputs/maxlength.min.js"></script>
+	<script src="/global_assets/js/plugins/forms/inputs/touchspin.min.js"></script>
+	<script src="/global_assets/js/plugins/forms/selects/select2.min.js"></script>
+	<script src="/global_assets/js/plugins/forms/styling/switch.min.js"></script>
+	<script src="/global_assets/js/plugins/forms/styling/switchery.min.js"></script>
+	<script src="/global_assets/js/demo_pages/form_validation.js"></script>
+	<script src="/global_assets/js/demo_pages/form_controls_extended.js"></script>
+	<script src="/global_assets/js/demo_pages/job_apply.js"></script>
+	<script src="/global_assets/js/demo_pages/login_validation.js"></script>
+    <script src="/global_assets/js/demo_pages/extra_jgrowl_noty.js"></script>
+    <script src="/global_assets/js/plugins/notifications/jgrowl.min.js"></script>
+    <script src="/global_assets/js/plugins/notifications/noty.min.js"></script>
 	<!-- /theme JS files -->
 
 
@@ -64,7 +91,7 @@
 	  <div class="navbar navbar-expand-md navbar-dark">
 		<div class="navbar-brand wmin-0 mr-5">
 			<a href="{{ route('default') }}" class="d-inline-block">
-				<img src="/global_assets/images/logo_light.png" alt="">
+				<h6>G-Hire</h6>
 			</a>
 		</div>
 
@@ -88,22 +115,20 @@
 
 						<div class="dropdown-content-body dropdown-scrollable">
 							<ul class="media-list">
-								@for ($i = 0; $i < count($users); $i++)
-									@foreach($users[$i] as $user)
-										<li class="media">
-											<div class="mr-3">
-												<img src="/global_assets/images/placeholders/placeholder.jpg" width="36" height="36" class="rounded-circle" alt="">
-											</div>
-											<div class="media-body">
-												<a href="{{ route('showmessages') }}" class="media-title font-weight-semibold">{{ $user->fname. ' '. $user->lname }}</a>
-												@if(Auth::user()->usertype === 'ProductOwner')
-													<span class="d-block text-muted font-size-sm">{{ 'Developer' }}</span>
-												@endif
-											</div>
-											<div class="ml-3 align-self-center"><span class="badge badge-mark border-success"></span></div>
-										</li>
-									@endforeach
-								@endfor	
+								@foreach($users[0] as $user)
+									<li class="media">
+										<div class="mr-3">
+											<img src="/global_assets/images/placeholders/placeholder.jpg" width="36" height="36" class="rounded-circle" alt="">
+										</div>
+										<div class="media-body">
+											<a href="{{ route('showmessages') }}" class="media-title font-weight-semibold">{{ $user->fname. ' '. $user->lname }}</a>
+											@if(Auth::user()->usertype === 'ProductOwner')
+												<span class="d-block text-muted font-size-sm">{{ 'Developer' }}</span>
+											@endif
+										</div>
+										<div class="ml-3 align-self-center"><span class="badge badge-mark border-success"></span></div>
+									</li>
+								@endforeach
 							</ul>
 						</div>
 					</div>
@@ -123,21 +148,21 @@
 
 						<div class="dropdown-content-body dropdown-scrollable">
 							<ul class="media-list">
-								<li class="media">
-									<div class="mr-3">
-										<a href="#" class="btn bg-transparent border-primary text-primary rounded-round border-2 btn-icon"><i class="icon-git-pull-request"></i></a>
-									</div>
-									@for ($i = 0; $i < count($live_projects); $i++)
-										@foreach($live_projects[$i] as $live_project)
+								@for ($i = 0; $i < count($live_projects); $i++)
+									@foreach($live_projects[$i] as $live_project)
+										<li class="media">
+											<div class="mr-3">
+												<a href="#" class="btn bg-transparent border-primary text-primary rounded-round border-2 btn-icon"><i class="icon-git-pull-request"></i></a>
+											</div>
 											<a href="{{ route('ActiveProjects', $live_project->id) }}">
 												<div class="media-body">
 													{{ $live_project->title }}
 													<div class="text-muted font-size-sm">{{ '$'.$live_project->budget }} <b>& Delivery Time: </b> {{ $live_project->deliverytime }}</div>
 												</div>
-											</a>
-										@endforeach
-									@endfor		
-								</li>
+											</a>	
+										</li>
+									@endforeach
+								@endfor	
 							</ul>
 						</div>
 

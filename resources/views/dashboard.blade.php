@@ -36,10 +36,12 @@
 												<img src="/global_assets/images/placeholders/placeholder.jpg" class="rounded-circle" width="42" height="42" alt="">
 											</a>
 										</div>
-
+										@foreach($data as $key=>$val)
 										<div class="media-body">
-											<h6 class="mb-0">Name</h6>
-											<span class="text-muted">UX/UI designer</span>
+											<h6 class="mb-0">{{$val->fname}} {{$val->lname}}</h6>
+											@foreach($port as $pt)
+											<span class="text-muted">{{$pt->specialization}}</span>
+											@endforeach
 											<li class="list-inline-item">
 												<i class="icon-star-full2 font-size-base text-warning-300"></i>
 												<i class="icon-star-full2 font-size-base text-warning-300"></i>
@@ -49,7 +51,7 @@
 												<span class="text-muted ml-1">(49)</span>
 											</li>
 										</div>
-
+										@endforeach
 										<div class="ml-3 align-self-center">
 											<div class="list-icons">
 						                    	<div class="list-icons-item dropdown">
@@ -66,38 +68,36 @@
 								</div>
 							</div>
 						@elseif(Auth::user()->usertype === 'Developer')
+						@foreach($recolist as $key=>$val)
 							<div class="card blog-horizontal">
 								<div class="card-body">
-
+									
 									<div class="mb-3">
 										<h5 class="d-flex font-weight-semibold flex-nowrap my-1">
-											<a href="#" class="text-default mr-2">Data Governance</a>
+											<a href="#" class="text-default mr-2">{{$val->title}}</a>
 
-											<span class="text-success ml-auto">$49.99</span>
+											<span class="text-success ml-auto">${{$val->budget}}</span>
 										</h5>
 
 										<ul class="list-inline list-inline-dotted text-muted mb-0">
-											<li class="list-inline-item">By <a href="#" class="text-muted">Eugene Kopyov</a></li>
-											<li class="list-inline-item">Nov 1st, 2016</li>
+											<li class="list-inline-item">By <a href="#" class="text-muted">
+											@foreach($usr as $us)
+												{{$us->fname}} {{$us->lname}}</a></li>
+											@endforeach
+											<li class="list-inline-item">Delivery Time:{{$val->deliverytime}}</li>
 										</ul>
 									</div>
-
-									<p>When suspiciously goodness labrador understood rethought yawned grew piously endearingly inarticulate oh goodness jeez trout distinct hence cobra despite.</p>
-
-									One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed.
+									
+									<p>{{$val->description}}</p>
 								</div>
-
 								<div class="card-footer d-sm-flex justify-content-sm-between align-items-sm-center">
-									<ul class="list-inline list-inline-dotted mb-0">
-										<li class="list-inline-item"><i class="icon-users mr-2"></i> 382</li>
-										<li class="list-inline-item"><i class="icon-alarm mr-2"></i> 60 hours</li>
-									</ul>
 
 									<div class="mt-2 mt-sm-0">
-										<a href="#"><i class="icon-checkmark3 font-size-base mr-2"></i> Apply to this Project</a>
+										<a href="{{route('startTest',['id'=>$val->id,'catagory'=>$val->catagory])}}"><i class="icon-checkmark3 font-size-base mr-2"></i> Apply to this Project</a>
 									</div>
 								</div>
-							</div>							
+							</div>	
+							@endforeach				
 						@endif
 					</div>
 				</div>
@@ -130,17 +130,9 @@
 									<tr>
 										<th style="width: 50px">{{ $live_project->deliverytime }}</th>
 										@if(Auth::user()->usertype === 'ProductOwner')
-											@for ($i = 0; $i < count($dev_details); $i++)
-												@foreach($dev_details[$i] as $dev_detail)
-													<th style="width: 300px;">{{ $dev_detail->fname . ' '. $dev_detail->lname }}</th>
-												@endforeach
-											@endfor
+											<th style="width: 300px;">{{ $dev_details }}</th>
 										@elseif(Auth::user()->usertype === 'Developer')
-											@for ($i = 0; $i < count($prodO_details); $i++)
-												@foreach($prodO_details[$i] as $prodO_detail)
-													<th style="width: 300px;">{{ $prodO_detail->fname . ' '. $prodO_detail->lname }}</th>
-												@endforeach
-											@endfor
+											<th style="width: 300px;">{{ $prodO_details }}</th>
 										@endif																			
 										<th style="width: 300px;">{{ $live_project->title }}</th>
 										<th>{{ $live_project->budget }}</th>

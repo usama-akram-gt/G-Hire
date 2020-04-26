@@ -135,17 +135,16 @@ class Projects extends Controller
             //getting that specific project according to $id
             for ($i = 0; $i < count($live_projects); $i++){
                 foreach($live_projects[$i] as $live_project){
-                    $current_ongoing_project[] = DB::table('ongoingprojects')->where('id','=',$id)->get();
+                    $current_ongoing_project[] = DB::table('ongoingprojects')->where('project_id','=',$id)->get();
                 }   
             }
 
             //Now getting that is any file related to that project has uploaded?
             for ($i = 0; $i < count($current_ongoing_project); $i++){
                 foreach($current_ongoing_project[$i] as $current_ongoing_prj){
-                    $files[] = DB::table('files')->where('project_id','=',$current_ongoing_prj->id)->get();
+                    $files[] = DB::table('files')->where('project_id','=',$current_ongoing_prj->project_id)->get();
                 }   
-            }            
-
+            }          
         }
         if($usertype[0]->usertype == 'Developer'){
             //check on how many he has applied via appliedprojects
@@ -169,7 +168,7 @@ class Projects extends Controller
             //Info related to that single project
             for ($i = 0; $i < count($live_projects); $i++){
                 foreach($live_projects[$i] as $live_project){
-                    $current_ongoing_project[] = DB::table('ongoingprojects')->where('id','=',$id)->get();
+                    $current_ongoing_project[] = DB::table('ongoingprojects')->where('project_id','=',$id)->get();
                 }   
             }
         }

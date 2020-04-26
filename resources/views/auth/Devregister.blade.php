@@ -194,13 +194,16 @@
 									</div>
 
 									<div class="form-group">
-										<label>Specialization:</label>
-		                                <input type="text" name="specialization" value="{{ old('specialization') }}" placeholder="Design, Development etc." class="form-control @error('specialization') is-invalid @enderror">
-										@error('specialization')
-											<span class="invalid-feedback" role="alert">
-												<strong>{{ $message }}</strong>
-											</span>
-										@enderror
+										<label>Specialization</label>
+										<select name="specialization" class="form-control form-control-select2 select2-hidden-accessible" data-fouc="" tabindex="-1" aria-hidden="true">
+											<optgroup label="Programming & Tech">
+												<option value="Web Programming">Web Programming</option>
+												<option value="Website Builders & CMS">Website Builders & CMS</option>
+												<option value="Mobile Applications">Mobile Applications</option>
+												<option value="Game Development">Game Development</option>
+												<option value="Desktop Application">Desktop Application</option>
+											</optgroup>
+										</select>
 									</div>
 								</div>
 

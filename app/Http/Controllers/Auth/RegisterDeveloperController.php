@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use App\Portfolio;
+use DB;
 
 class RegisterDeveloperController extends Controller
 {
@@ -89,16 +90,17 @@ class RegisterDeveloperController extends Controller
             'password' => Hash::make($request->password),
             'usertype' => $request->usertype,
         ]);
+        $id = DB::table('users')->where('email','=',$request->email)->get('id');
         Portfolio::create([
             'birth-month' => $request->birth_month,
             'birth-day' => $request->birth_day,
             'birth-year' => $request->birth_year,
             'university' => $request->university,
-            'university-country' => $request->university_country,
             'level1' => $request->level1,
             'specialization' => $request->specialization,
             'education-from-month' => $request->education_from_month,
             'education-from-year' => $request->education_from_year,
+            'eniversity-country' => $request->university_country,
             'education-to-month' => $request->education_to_month,
             'education-to-year' => $request->education_to_year,
             'education-language' => $request->education_language,
@@ -114,6 +116,11 @@ class RegisterDeveloperController extends Controller
             'availability' => $request->availability,
             'additional-info' => $request->additional_info,
             'email' => $request->email,
+            'userid_fk' => $id[0]->id
+        ]);
+        DB::table('specialization')->insert([
+            [ 'specialization' => $request->specialization,
+            'userid_fk' => $id[0]->id]
         ]);
         return redirect()->route('login'); 
     }

@@ -119,7 +119,8 @@ class RecommendationSystem extends Controller
         }
     }
 
-    public function startProjectRecommendationNew(){
+//for customers, shows list of all devs related to all projects
+public function startDeveloperRecommendationDasboard(){
         $contacts = array();
         $contacts[] = Message::select('to',DB::raw('COUNT("to") as unread_count'))->where('from', '=', auth()->id())->where('read','=',false)->groupBy('to')->get();
         $contacts[] = Message::select('to',DB::raw('COUNT("to") as read_count'))->where('from', '=', auth()->id())->where('read','=',true)->groupBy('to')->get();
@@ -129,20 +130,50 @@ class RecommendationSystem extends Controller
                 $users[] = User::where('id', '=', $contact->to)->get();
             }   
         }
-        
-        $spec=DB::table('portfolios')->select('specialization')->where('userid_fk',auth()->id())->get();
-        $spec='web programming';
-        //$spec='mobile applications';
-        $projects=DB::table('projects')->where('catagory','=',$spec)->get();
+
+        //$spec=DB::table('specialization')->where('specialization',$catagory)->get();
+        //echo $id;
+        //echo $catagory
+
+        $projects=DB::table('projects')->where('userid_fk',auth()->id())->get();
         //dd($projects);
-        //echo $projects;
-        if($projects->count() > 0){
-            //sreturn view('Developer.applytoprojects',compact('users','projects'));
-            return view('Developer.Dashboard',compact('projects'));
-            //return $projects;
+        //echo $pro->catagory;
+        //exit();
+        $spec=DB::table('specialization')
+        ->wherein('specialization', function($query)
+        {
+            $query->select(DB::raw('catagory'))
+                  ->from('projects')
+                  ->where('userid_fk', '=', auth()->id());
+        })
+        ->get();
+        //dd($spec);
+        //exit();
+        if(count($spec)>0){
+            foreach($spec as $pro)
+            {
+                $usr=DB::table('users')->where('id','=',$pro->userid_fk)->get();
+                //$port=DB::table('portfolios')->where('userid_fk','=',$pro->userid_fk)->get();
+            }
         }
-        else{
-            return view('Developer.Dashboard');
+        //dd($usr);
+        //exit();
+        //$data = array_merge($usr->toArray(),$port->toArray());
+        
+        //dd($data[0]->fname);
+        //exit();
+        /**foreach ($spec as $value) {
+            # code...
+        $devlist= DB::table('users')
+            ->join('portfolios', 'users.id', '=', 'portfolios.userid_fk')
+            ->join('specialization', 'users.id', '=', 'specialization.userid_fk')
+            ->select('users.*', 'portfolios.*', 'specialization.*')
+            ->where('users.id','=',$value->userid_fk)
+            ->get();
         }
+        **/
+        return $usr;  //returns to dashboard class
     }
+    
+    
 }

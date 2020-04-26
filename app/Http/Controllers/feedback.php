@@ -11,7 +11,7 @@ use Auth;
 
 class feedback extends Controller
 {
-    public function storeFeedback(Request $req,$id)
+    public function storeFeedback(Request $req,$id,$pid)
     {
         $contacts = array();
         $contacts[] = Message::select('to',DB::raw('COUNT("to") as unread_count'))->where('from', '=', auth()->id())->where('read','=',false)->groupBy('to')->get();
@@ -31,15 +31,8 @@ class feedback extends Controller
         //write insert data code from here...
         $data=array("stars"=>$stars,'responsetime'=>$rpt,'communincation'=>$comm,
         'recommend'=>$recommend,'remarks'=>$remarks,'dev_id'=>$id,'prodOid_fk'=>auth()->id());
-        /*DB::table('feedbacks')->insert($data);
-        $data['data']=DB::table('appliedprojects')->where('project_id',$projid)->get();
-
-        if(count($data)>0)
-        {
-            return view('ProductOwner.appliedemployee',compact('data','users'));
-        }else{
-            return view('ProductOwner.appliedemployee');
-        }*/
+        DB::table('feedbacks')->insert($data);
+        DB::table('ongoingprojects')->where('project_id', $pid)->update(['status' => 'Complete']);
         return back();
     }
     public function givefeedback()

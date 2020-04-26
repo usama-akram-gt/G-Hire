@@ -120,7 +120,56 @@ class ContactsController extends Controller
         //foreach(json_decode($contacts_count) as $contact_count){
           //  print_r($contact_count->to_count . '<br>');
         //} 
-        return view('messages', compact('contacts','users','messages'));
+        $usertype = DB::table('users')->where('id','=',auth()->id())->get('usertype');
+        if($usertype[0]->usertype == 'ProductOwner'){
+            //check he has uploaded any project or not?
+            $projects[] = DB::table('projects')->where('userid_fk','=',auth()->id())->get();
+
+            //if he uploaded any project then check wether he accepts someone related to that project?
+            for ($i = 0; $i < count($projects); $i++){
+                foreach($projects[$i] as $project){
+                    $ongoingprojects[] = DB::table('ongoingprojects')->where('project_id','=',$project->id)->get();
+                }   
+            }
+
+
+            //now get every developer detail against each live project
+            for ($i = 0; $i < count($ongoingprojects); $i++){
+                foreach($ongoingprojects[$i] as $ongoingproject){
+                    $dev_details[] = DB::table('users')->where('id','=',$ongoingproject->dev_id)->get();
+                    $live_projects[] = DB::table('projects')->where('id','=',$ongoingproject->project_id)->get();
+                }   
+            }
+
+            $total_invested = 0;
+            for ($i = 0; $i < count($live_projects); $i++){
+                foreach($live_projects[$i] as $live_project){
+                    $budget = DB::table('projects')->where('id','=',$live_project->id)->get('budget');
+                    $total_invested += $budget[0]->budget;
+                }   
+            }          
+
+        }
+        if($usertype[0]->usertype == 'Developer'){
+            //check on how many he has applied via appliedprojects
+            $projects[] = DB::table('appliedprojects')->where('dev_id','=',auth()->id())->get();
+
+            //check how much are on-going
+            for ($i = 0; $i < count($projects); $i++){
+                foreach($projects[$i] as $project){
+                    $ongoingprojects[] = DB::table('ongoingprojects')->where('project_id','=',$project->project_id)->where('dev_id','=',auth()->id())->get();
+                }   
+            }
+
+            //now getting product-owner detials and projects details to show
+            for ($i = 0; $i < count($ongoingprojects); $i++){
+                foreach($ongoingprojects[$i] as $ongoingproject){
+                    $prodO_details[] = DB::table('users')->where('id','=',$ongoingproject->prodO_id)->get();
+                    $live_projects[] = DB::table('projects')->where('id','=',$ongoingproject->project_id)->get();
+                }   
+            }
+        }
+        return view('messages', compact('contacts','users','messages','live_projects'));
     }
 
     public function getMessagesFor($id)
