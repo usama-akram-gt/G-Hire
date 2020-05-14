@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Payment\Cashier;
+use Redirect;
 use DB;
 
 class Payments extends Controller
@@ -50,8 +51,7 @@ class Payments extends Controller
         $res = Cashier::pay($info);
 
         if(!$res['success']){
-            return response(['message'=>$res],400);
-            //return response(['message'=>$res['message']],400);
+            //return Redirect::back();
         }
 
         $product_owner_id = DB::table('projects')->where('id','=',$project_id)->get('userid_fk');
@@ -75,6 +75,6 @@ class Payments extends Controller
             'prodO_id' => $product_owner_id[0]->userid_fk]
         ]);
 
-        return ['message'=>'Paid Successfully'];
+        return Redirect::back();
     }
 }

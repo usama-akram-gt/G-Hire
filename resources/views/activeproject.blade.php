@@ -99,6 +99,111 @@
             </form>
 			@endforeach
 		</div>
+		<!-- Version Control System -->
+		<div class="card">
+			<div class="card-header header-elements-sm-inline">
+				<div class="col-lg-12">
+					<h6 class="card-title"><strong>Version Control System</strong></h6>				
+				</div>
+				<div class="header-elements">
+					
+            	</div>
+			</div>
+
+			<div class="card-body d-sm-flex align-items-sm-center justify-content-sm-between flex-sm-wrap">
+				<div class="col-lg-12">
+					@if(Auth::user()->usertype === 'ProductOwner')
+						<p>You can track this <code>repository</code> which has been controlling by the developer to work on your project.</p>
+					@endif
+					@if(Auth::user()->usertype === 'Developer')
+						<p>You can create <code>repository</code> to manage the code versioning more efficiently. You need to provide your github username so that we create repo and invite you as a contributor to start controlling this project versioning.</p>
+					@endif
+				</div>
+				@if(Auth::user()->usertype === 'Developer')
+					@if($vcs_project[0]->isEmpty())
+						<div class="col-lg-6" id="starting">
+							<div class="input-group">
+								<input type="text" class="form-control" required="" placeholder="Enter your Github username?" id="contributor_name">
+								<span class="input-group-append">
+									@foreach($current_ongoing_project[0] as $current_ongoing_prj)
+										<button class="btn btn-light" data-projectid="{{ $current_ongoing_prj->project_id }}" data-devid="{{ $current_ongoing_prj->dev_id }}" data-poid="{{ $current_ongoing_prj->prodO_id }}" type="button" id="start_vcs">Create</button>
+									@endforeach
+								</span>
+							</div>
+						</div>
+					@endif
+					@if(!$vcs_project[0]->isEmpty())
+						<div class="col-lg-6" id="links">
+							<h5 class="font-weight-semibold mb-0">Contributor Link: 
+								<span class="text-success font-size-sm font-weight-normal">
+									 <a href="javascript:void(0)">Link</a>
+								</span>
+							</h5>
+							<h5 class="font-weight-semibold mb-0">Remote Link: 
+								<span class="text-success font-size-sm font-weight-normal">
+									 <a href="javascript:void(0)">Link</a>
+								</span>
+							</h5>
+						</div>
+					@endif	
+				@endif
+			</div>
+
+			<div class="table-responsive">
+				<table class="table text-nowrap">
+					<thead>
+						<tr class="table-active table-border-double">
+							<td><span class="text-success-600"><i class="icon-alignment-unalign mr-2"></i> Commits 2</span></td>
+							<td>
+								<span class="badge bg-success badge-pill">2 Branches</span>
+								<div class="list-icons ml-3">
+			                		<div class="list-icons-item dropdown">
+			                			<a href="#" class="list-icons-item dropdown-toggle" data-toggle="dropdown"><i class="icon-git-pull-request"></i></a>
+										<div class="dropdown-menu">
+											<a href="#" class="dropdown-item"><i class="icon-sync"></i> master</a>
+											<a href="#" class="dropdown-item"><i class="icon-sync"></i> version 1.0.1 - beta</a>
+										</div>
+			                		</div>
+			                	</div>	
+                			</td>
+							<td><span class="text-success-600"><i class="icon-stats-growth2 mr-2"></i> Contributors: 2</span></td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th>File Name</th>
+							<th>Commit Message</th>
+							<th>Creation Time</th>
+						</tr>
+						<tr>
+							<td>
+								<div class="d-flex align-items-center">
+									<div class="mr-3">
+										<span><i class="icon-folder mr-2"></i></span>
+										<a href="#" class="text-default">app</a>
+									</div>
+								</div>
+							</td>
+							<td><span class="text-muted">upto 80%</span></td>
+							<td><span class="text-muted">13 days ago</span></td>
+						</tr>
+						<tr>
+							<td>
+								<div class="d-flex align-items-center">
+									<div class="mr-3">
+										<span><i class="icon-file-text mr-2"></i></span>
+										<a href="#" class="text-default">composer.json</a>
+									</div>
+								</div>
+							</td>
+							<td><span class="text-muted">Layout changes</span></td>
+							<td><span class="text-muted">6 days ago</span></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<!-- /Version Control System -->
 	</div>
 	<!-- /Post Project -->
 	<!-- Feedback Modal -->
@@ -169,8 +274,9 @@
 	<!-- Feedback Modal -->
 
 	<script>
+
 		// Set the date we're counting down to
-		var countDownDate = new Date("March 15, 2020 15:37:25").getTime();
+		var countDownDate = new Date("May 15, 2020 15:37:25").getTime();
 
 		// Update the count down every 1 second
 		var x = setInterval(function() {
@@ -212,9 +318,69 @@
 	<script type="text/javascript">
 		$('#endorsement').click(function() {
 			var id = $("#endorsement").attr("data-id");
-			console.log(id);
 			window.location.href = '/Endorsement/' + id;
 		});
+
+		$('#start_vcs').click(function() {
+			var contributor_name = document.getElementById('contributor_name').value;
+			if(contributor_name === ''){ return; }
+			name = generateName();			
+			creating_repo(name);
+			adding_contributor(contributor_name);
+
+			var projid = $("#start_vcs").attr("data-projectid");
+			var devid = $("#start_vcs").attr("data-devid");
+			var poid = $("#start_vcs").attr("data-poid");
+			window.location.href = '/create_repo/' + projid + '/' + devid + '/' + poid + '/' + name;
+		});
+
+		function creating_repo(name){
+			var settings = {
+			  "url": "https://api.github.com/orgs/G-Hire/repos",
+			  "method": "POST",
+			  "timeout": 0,
+			  "headers": {
+			    "Authorization": "Bearer bf0ef26d03b2f52bb4a5b94cd671b6f3c7ebfc81",
+			    "Content-Type": "application/json"
+			  },
+			  "data": JSON.stringify({"name":name,"description":name,"private":true}),
+			};
+
+			$.ajax(settings).done(function (response) {
+			  console.log(response);
+			});
+		}
+
+		function adding_contributor(cn){
+			var settings = {
+			  "url": `https://api.github.com/repos/G-Hire/New-Repo/collaborators/${cn}`,
+			  "method": "PUT",
+			  "timeout": 0,
+			  "headers": {
+			    "Authorization": "Bearer bf0ef26d03b2f52bb4a5b94cd671b6f3c7ebfc81"
+			  },
+			};
+
+			$.ajax(settings).done(function (response) {
+			  console.log(response);
+			});
+		}
+
+
+		function capFirst(string) {
+			    return string.charAt(0).toUpperCase() + string.slice(1);
+			}
+
+			function getRandomInt(min, max) {
+			  	return Math.floor(Math.random() * (max - min)) + min;
+			}
+
+			function generateName(){
+				var name1 = ["abandoned","able","absolute","adorable","adventurous","academic","acceptable","acclaimed","accomplished","accurate","aching","acidic","acrobatic","active","actual","adept","admirable","admired","adolescent","adorable","adored","advanced","afraid","affectionate","aged","aggravating","aggressive","agile","agitated","agonizing","agreeable","ajar","alarmed","alarming","alert","alienated","alive","all","altruistic","amazing","ambitious","ample","amused","amusing","anchored","ancient","angelic","angry","anguished","animated","annual","another","antique","anxious","any","apprehensive","appropriate","apt","arctic","arid","aromatic","artistic","ashamed","assured","astonishing","athletic","attached","attentive","attractive","austere","authentic","authorized","automatic","avaricious","average","aware","awesome","awful","awkward","babyish","bad","back","baggy","bare","barren","basic","beautiful","belated","beloved","beneficial","better","best","bewitched","big","big-hearted","biodegradable","bite-sized","bitter","black","black-and-white","bland","blank","blaring","bleak","blind","blissful","blond","blue","blushing","bogus","boiling","bold","bony","boring","bossy","both","bouncy","bountiful","bowed","brave","breakable","brief","bright","brilliant","brisk","broken","bronze","brown","bruised","bubbly","bulky","bumpy","buoyant","burdensome","burly","bustling","busy","buttery","buzzing","calculating","calm","candid","canine","capital","carefree","careful","careless","caring","cautious","cavernous","celebrated","charming","cheap","cheerful","cheery","chief","chilly","chubby","circular","classic","clean","clear","clear-cut","clever","close","closed","cloudy","clueless","clumsy","cluttered","coarse","cold","colorful","colorless","colossal","comfortable","common","compassionate","competent","complete","complex","complicated","composed","concerned","concrete","confused","conscious","considerate","constant","content","conventional","cooked","cool","cooperative","coordinated","corny","corrupt","costly","courageous","courteous","crafty","crazy","creamy","creative","creepy","criminal","crisp","critical","crooked","crowded","cruel","crushing","cuddly","cultivated","cultured","cumbersome","curly","curvy","cute","cylindrical","damaged","damp","dangerous","dapper","daring","darling","dark","dazzling","dead","deadly","deafening","dear","dearest","decent","decimal","decisive","deep","defenseless","defensive","defiant","deficient","definite","definitive","delayed","delectable","delicious","delightful","delirious","demanding","dense","dental","dependable","dependent","descriptive","deserted","detailed","determined","devoted","different","difficult","digital","diligent","dim","dimpled","dimwitted","direct","disastrous","discrete","disfigured","disgusting","disloyal","dismal","distant","downright","dreary","dirty","disguised","dishonest","dismal","distant","distinct","distorted","dizzy","dopey","doting","double","downright","drab","drafty","dramatic","dreary","droopy","dry","dual","dull","dutiful","each","eager","earnest","early","easy","easy-going","ecstatic","edible","educated","elaborate","elastic","elated","elderly","electric","elegant","elementary","elliptical","embarrassed","embellished","eminent","emotional","empty","enchanted","enchanting","energetic","enlightened","enormous","enraged","entire","envious","equal","equatorial","essential","esteemed","ethical","euphoric","even","evergreen","everlasting","every","evil","exalted","excellent","exemplary","exhausted","excitable","excited","exciting","exotic","expensive","experienced","expert","extraneous","extroverted","extra-large","extra-small","fabulous","failing","faint","fair","faithful","fake","false","familiar","famous","fancy","fantastic","far","faraway","far-flung","far-off","fast","fat","fatal","fatherly","favorable","favorite","fearful","fearless","feisty","feline","female","feminine","few","fickle","filthy","fine","finished","firm","first","firsthand","fitting","fixed","flaky","flamboyant","flashy","flat","flawed","flawless","flickering","flimsy","flippant","flowery","fluffy","fluid","flustered","focused","fond","foolhardy","foolish","forceful","forked","formal","forsaken","forthright","fortunate","fragrant","frail","frank","frayed","free","French","fresh","frequent","friendly","frightened","frightening","frigid","frilly","frizzy","frivolous","front","frosty","frozen","frugal","fruitful","full","fumbling","functional","funny","fussy","fuzzy","gargantuan","gaseous","general","generous","gentle","genuine","giant","giddy","gigantic","gifted","giving","glamorous","glaring","glass","gleaming","gleeful","glistening","glittering","gloomy","glorious","glossy","glum","golden","good","good-natured","gorgeous","graceful","gracious","grand","grandiose","granular","grateful","grave","gray","great","greedy","green","gregarious","grim","grimy","gripping","grizzled","gross","grotesque","grouchy","grounded","growing","growling","grown","grubby","gruesome","grumpy","guilty","gullible","gummy","hairy","half","handmade","handsome","handy","happy","happy-go-lucky","hard","hard-to-find","harmful","harmless","harmonious","harsh","hasty","hateful","haunting","healthy","heartfelt","hearty","heavenly","heavy","hefty","helpful","helpless","hidden","hideous","high","high-level","hilarious","hoarse","hollow","homely","honest","honorable","honored","hopeful","horrible","hospitable","hot","huge","humble","humiliating","humming","humongous","hungry","hurtful","husky","icky","icy","ideal","idealistic","identical","idle","idiotic","idolized","ignorant","ill","illegal","ill-fated","ill-informed","illiterate","illustrious","imaginary","imaginative","immaculate","immaterial","immediate","immense","impassioned","impeccable","impartial","imperfect","imperturbable","impish","impolite","important","impossible","impractical","impressionable","impressive","improbable","impure","inborn","incomparable","incompatible","incomplete","inconsequential","incredible","indelible","inexperienced","indolent","infamous","infantile","infatuated","inferior","infinite","informal","innocent","insecure","insidious","insignificant","insistent","instructive","insubstantial","intelligent","intent","intentional","interesting","internal","international","intrepid","ironclad","irresponsible","irritating","itchy","jaded","jagged","jam-packed","jaunty","jealous","jittery","joint","jolly","jovial","joyful","joyous","jubilant","judicious","juicy","jumbo","junior","jumpy","juvenile","kaleidoscopic","keen","key","kind","kindhearted","kindly","klutzy","knobby","knotty","knowledgeable","knowing","known","kooky","kosher","lame","lanky","large","last","lasting","late","lavish","lawful","lazy","leading","lean","leafy","left","legal","legitimate","light","lighthearted","likable","likely","limited","limp","limping","linear","lined","liquid","little","live","lively","livid","loathsome","lone","lonely","long","long-term","loose","lopsided","lost","loud","lovable","lovely","loving","low","loyal","lucky","lumbering","luminous","lumpy","lustrous","luxurious","mad","made-up","magnificent","majestic","major","male","mammoth","married","marvelous","masculine","massive","mature","meager","mealy","mean","measly","meaty","medical","mediocre","medium","meek","mellow","melodic","memorable","menacing","merry","messy","metallic","mild","milky","mindless","miniature","minor","minty","miserable","miserly","misguided","misty","mixed","modern","modest","moist","monstrous","monthly","monumental","moral","mortified","motherly","motionless","mountainous","muddy","muffled","multicolored","mundane","murky","mushy","musty","muted","mysterious","naive","narrow","nasty","natural","naughty","nautical","near","neat","necessary","needy","negative","neglected","negligible","neighboring","nervous","new","next","nice","nifty","nimble","nippy","nocturnal","noisy","nonstop","normal","notable","noted","noteworthy","novel","noxious","numb","nutritious","nutty","obedient","obese","oblong","oily","oblong","obvious","occasional","odd","oddball","offbeat","offensive","official","old","old-fashioned","only","open","optimal","optimistic","opulent","orange","orderly","organic","ornate","ornery","ordinary","original","other","our","outlying","outgoing","outlandish","outrageous","outstanding","oval","overcooked","overdue","overjoyed","overlooked","palatable","pale","paltry","parallel","parched","partial","passionate","past","pastel","peaceful","peppery","perfect","perfumed","periodic","perky","personal","pertinent","pesky","pessimistic","petty","phony","physical","piercing","pink","pitiful","plain","plaintive","plastic","playful","pleasant","pleased","pleasing","plump","plush","polished","polite","political","pointed","pointless","poised","poor","popular","portly","posh","positive","possible","potable","powerful","powerless","practical","precious","present","prestigious","pretty","precious","previous","pricey","prickly","primary","prime","pristine","private","prize","probable","productive","profitable","profuse","proper","proud","prudent","punctual","pungent","puny","pure","purple","pushy","putrid","puzzled","puzzling","quaint","qualified","quarrelsome","quarterly","queasy","querulous","questionable","quick","quick-witted","quiet","quintessential","quirky","quixotic","quizzical","radiant","ragged","rapid","rare","rash","raw","recent","reckless","rectangular","ready","real","realistic","reasonable","red","reflecting","regal","regular","reliable","relieved","remarkable","remorseful","remote","repentant","required","respectful","responsible","repulsive","revolving","rewarding","rich","rigid","right","ringed","ripe","roasted","robust","rosy","rotating","rotten","rough","round","rowdy","royal","rubbery","rundown","ruddy","rude","runny","rural","rusty","sad","safe","salty","same","sandy","sane","sarcastic","sardonic","satisfied","scaly","scarce","scared","scary","scented","scholarly","scientific","scornful","scratchy","scrawny","second","secondary","second-hand","secret","self-assured","self-reliant","selfish","sentimental","separate","serene","serious","serpentine","several","severe","shabby","shadowy","shady","shallow","shameful","shameless","sharp","shimmering","shiny","shocked","shocking","shoddy","short","short-term","showy","shrill","shy","sick","silent","silky","silly","silver","similar","simple","simplistic","sinful","single","sizzling","skeletal","skinny","sleepy","slight","slim","slimy","slippery","slow","slushy","small","smart","smoggy","smooth","smug","snappy","snarling","sneaky","sniveling","snoopy","sociable","soft","soggy","solid","somber","some","spherical","sophisticated","sore","sorrowful","soulful","soupy","sour","Spanish","sparkling","sparse","specific","spectacular","speedy","spicy","spiffy","spirited","spiteful","splendid","spotless","spotted","spry","square","squeaky","squiggly","stable","staid","stained","stale","standard","starchy","stark","starry","steep","sticky","stiff","stimulating","stingy","stormy","straight","strange","steel","strict","strident","striking","striped","strong","studious","stunning","stupendous","stupid","sturdy","stylish","subdued","submissive","substantial","subtle","suburban","sudden","sugary","sunny","super","superb","superficial","superior","supportive","sure-footed","surprised","suspicious","svelte","sweaty","sweet","sweltering","swift","sympathetic","tall","talkative","tame","tan","tangible","tart","tasty","tattered","taut","tedious","teeming","tempting","tender","tense","tepid","terrible","terrific","testy","thankful","that","these","thick","thin","third","thirsty","this","thorough","thorny","those","thoughtful","threadbare","thrifty","thunderous","tidy","tight","timely","tinted","tiny","tired","torn","total","tough","traumatic","treasured","tremendous","tragic","trained","tremendous","triangular","tricky","trifling","trim","trivial","troubled","true","trusting","trustworthy","trusty","truthful","tubby","turbulent","twin","ugly","ultimate","unacceptable","unaware","uncomfortable","uncommon","unconscious","understated","unequaled","uneven","unfinished","unfit","unfolded","unfortunate","unhappy","unhealthy","uniform","unimportant","unique","united","unkempt","unknown","unlawful","unlined","unlucky","unnatural","unpleasant","unrealistic","unripe","unruly","unselfish","unsightly","unsteady","unsung","untidy","untimely","untried","untrue","unused","unusual","unwelcome","unwieldy","unwilling","unwitting","unwritten","upbeat","upright","upset","urban","usable","used","useful","useless","utilized","utter","vacant","vague","vain","valid","valuable","vapid","variable","vast","velvety","venerated","vengeful","verifiable","vibrant","vicious","victorious","vigilant","vigorous","villainous","violet","violent","virtual","virtuous","visible","vital","vivacious","vivid","voluminous","wan","warlike","warm","warmhearted","warped","wary","wasteful","watchful","waterlogged","watery","wavy","wealthy","weak","weary","webbed","wee","weekly","weepy","weighty","weird","welcome","well-documented","well-groomed","well-informed","well-lit","well-made","well-off","well-to-do","well-worn","wet","which","whimsical","whirlwind","whispered","white","whole","whopping","wicked","wide","wide-eyed","wiggly","wild","willing","wilted","winding","windy","winged","wiry","wise","witty","wobbly","woeful","wonderful","wooden","woozy","wordy","worldly","worn","worried","worrisome","worse","worst","worthless","worthwhile","worthy","wrathful","wretched","writhing","wrong","wry","yawning","yearly","yellow","yellowish","young","youthful","yummy","zany","zealous","zesty","zigzag","rocky"];
+
+				var name = capFirst(name1[getRandomInt(0, name1.length + 1)]);
+				return name;
+			}
 
 	</script>
 

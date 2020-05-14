@@ -127,3 +127,6 @@ Route::get('/ProductOwner/downloadFile/{path}/{name}', function(Request $req){
 //Endorsement
 Route::get('/Endorsement/{id}','FileController@filecontrolling')->name('endorsement');
 
+//create repo
+Route::get('/create_repo/{projid}/{devid}/{poid}/{reponame}','Projects@versioncontrolsystem')->name('vcs');
+
