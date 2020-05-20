@@ -119,89 +119,105 @@
 						<p>You can create <code>repository</code> to manage the code versioning more efficiently. You need to provide your github username so that we create repo and invite you as a contributor to start controlling this project versioning.</p>
 					@endif
 				</div>
-				@if(Auth::user()->usertype === 'Developer')
-					@if($vcs_project[0]->isEmpty())
-						<div class="col-lg-6" id="starting">
-							<div class="input-group">
-								<input type="text" class="form-control" required="" placeholder="Enter your Github username?" id="contributor_name">
-								<span class="input-group-append">
-									@foreach($current_ongoing_project[0] as $current_ongoing_prj)
-										<button class="btn btn-light" data-projectid="{{ $current_ongoing_prj->project_id }}" data-devid="{{ $current_ongoing_prj->dev_id }}" data-poid="{{ $current_ongoing_prj->prodO_id }}" type="button" id="start_vcs">Create</button>
-									@endforeach
-								</span>
+				<div class="row">
+					@if(Auth::user()->usertype === 'Developer')
+						@if($vcs_project[0]->isEmpty())
+							<div class="col-lg-12" id="starting">
+								<div class="input-group">
+									<input type="text" class="form-control" required="" placeholder="Enter your Github username?" id="contributor_name">
+									<span class="input-group-append">
+										@foreach($current_ongoing_project[0] as $current_ongoing_prj)
+											<button class="btn btn-light" data-projectid="{{ $current_ongoing_prj->project_id }}" data-devid="{{ $current_ongoing_prj->dev_id }}" data-poid="{{ $current_ongoing_prj->prodO_id }}" type="button" id="start_vcs">Create</button>
+										@endforeach
+									</span>
+								</div>
 							</div>
-						</div>
+						@endif
+						@if(!$vcs_project[0]->isEmpty())
+							<div class="col-lg-12" id="links">
+								<h5 class="font-weight-semibold mb-0">Contributor Link: 
+									<span class="text-success font-size-sm font-weight-normal">
+										@foreach($vcs_project[0] as $vcs_proj)
+											 <a href="javascript:void(0)">https://github.com/G-Hire/{{ $vcs_proj->repo_name }}/invitations</a>
+										 @endforeach
+									</span>
+								</h5>
+								<h5 class="font-weight-semibold mb-0">Clone with HTTPS: 
+									<span class="text-success font-size-sm font-weight-normal">
+										@foreach($vcs_project[0] as $vcs_proj)
+										 <a href="javascript:void(0)">https://github.com/G-Hire/{{ $vcs_proj->repo_name }}.git</a>
+										 @endforeach
+									</span>
+								</h5>
+							</div>
+						@endif
+						<div class="col-lg-12">
+							@foreach($vcs_project[0] as $vcs_proj)
+								<button id="referesh" data-RN="{{ $vcs_proj->repo_name }}">Referesh</button>
+							@endforeach
+						</div>	
 					@endif
-					@if(!$vcs_project[0]->isEmpty())
-						<div class="col-lg-6" id="links">
-							<h5 class="font-weight-semibold mb-0">Contributor Link: 
-								<span class="text-success font-size-sm font-weight-normal">
-									 <a href="javascript:void(0)">Link</a>
-								</span>
-							</h5>
-							<h5 class="font-weight-semibold mb-0">Remote Link: 
-								<span class="text-success font-size-sm font-weight-normal">
-									 <a href="javascript:void(0)">Link</a>
-								</span>
-							</h5>
-						</div>
-					@endif	
-				@endif
+				</div>
 			</div>
 
-			<div class="table-responsive">
-				<table class="table text-nowrap">
-					<thead>
-						<tr class="table-active table-border-double">
-							<td><span class="text-success-600"><i class="icon-alignment-unalign mr-2"></i> Commits 2</span></td>
-							<td>
-								<span class="badge bg-success badge-pill">2 Branches</span>
-								<div class="list-icons ml-3">
-			                		<div class="list-icons-item dropdown">
-			                			<a href="#" class="list-icons-item dropdown-toggle" data-toggle="dropdown"><i class="icon-git-pull-request"></i></a>
-										<div class="dropdown-menu">
-											<a href="#" class="dropdown-item"><i class="icon-sync"></i> master</a>
-											<a href="#" class="dropdown-item"><i class="icon-sync"></i> version 1.0.1 - beta</a>
+			@if($vcs_project[0]->isEmpty())
+				<h6><code>Repo has not yet created!</code></h6>
+			@endif
+			@if(!$vcs_project[0]->isEmpty())
+				<div class="table-responsive" id="files">
+					<table class="table text-nowrap">
+						<thead>
+							<tr class="table-active table-border-double">
+								<td><span class="text-success-600"><i class="icon-alignment-unalign mr-2"></i> <b id="commits">0 commits</b></span></td>
+								<td>
+									<span class="badge bg-success badge-pill" id="no_branches">0 branches</span>
+									<div class="list-icons ml-3">
+				                		<div class="list-icons-item dropdown">
+				                			<a href="#" class="list-icons-item dropdown-toggle" data-toggle="dropdown"><i class="icon-git-pull-request"></i></a>
+											<div class="dropdown-menu" id="branches_name">
+											</div>
+				                		</div>
+				                	</div>	
+	                			</td>
+								<td><span class="text-success-600"><i class="icon-stats-growth2 mr-2"></i> <b id="contributor">2 contributors</b></span></td>
+							</tr>
+						</thead>
+						<tbody id="Repo_files">
+							<tr>
+								<th>File Name</th>
+								<th>Commit Message</th>
+								<th>Creation Time</th>
+							</tr>
+							<!--
+								<tr>
+									<td>
+										<div class="d-flex align-items-center">
+											<div class="mr-3">
+												<span><i class="icon-folder mr-2"></i></span>
+												<a href="#" class="text-default">app</a>
+											</div>
 										</div>
-			                		</div>
-			                	</div>	
-                			</td>
-							<td><span class="text-success-600"><i class="icon-stats-growth2 mr-2"></i> Contributors: 2</span></td>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<th>File Name</th>
-							<th>Commit Message</th>
-							<th>Creation Time</th>
-						</tr>
-						<tr>
-							<td>
-								<div class="d-flex align-items-center">
-									<div class="mr-3">
-										<span><i class="icon-folder mr-2"></i></span>
-										<a href="#" class="text-default">app</a>
-									</div>
-								</div>
-							</td>
-							<td><span class="text-muted">upto 80%</span></td>
-							<td><span class="text-muted">13 days ago</span></td>
-						</tr>
-						<tr>
-							<td>
-								<div class="d-flex align-items-center">
-									<div class="mr-3">
-										<span><i class="icon-file-text mr-2"></i></span>
-										<a href="#" class="text-default">composer.json</a>
-									</div>
-								</div>
-							</td>
-							<td><span class="text-muted">Layout changes</span></td>
-							<td><span class="text-muted">6 days ago</span></td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
+									</td>
+									<td><span class="text-muted">upto 80%</span></td>
+									<td><span class="text-muted">13 days ago</span></td>
+								</tr>
+								<tr>
+									<td>
+										<div class="d-flex align-items-center">
+											<div class="mr-3">
+												<span><i class="icon-file-text mr-2"></i></span>
+												<a href="#" class="text-default">composer.json</a>
+											</div>
+										</div>
+									</td>
+									<td><span class="text-muted">Layout changes</span></td>
+									<td><span class="text-muted">6 days ago</span></td>
+								</tr>
+							-->
+						</tbody>
+					</table>
+				</div>
+			@endif
 		</div>
 		<!-- /Version Control System -->
 	</div>
@@ -321,26 +337,196 @@
 			window.location.href = '/Endorsement/' + id;
 		});
 
+		$('#referesh').click(function() {
+			calling_from_referesh();
+		});
+
+		calling_from_referesh();
+
+
+		function calling_from_referesh(){
+			var RN = $("#referesh").attr("data-RN");
+			var settings = {
+			  "url": `https://api.github.com/repos/G-Hire/${RN}/commits`,
+			  "method": "GET",
+			  "timeout": 0,
+			  "headers": {
+			    "Authorization": "Bearer c4517ac5e16ca69d767b8d6d338c34f9b25eef57"
+			  },
+			};
+			running_API(settings, 'commits');
+			var settings = {
+			  "url": `https://api.github.com/repos/G-Hire/${RN}/branches`,
+			  "method": "GET",
+			  "timeout": 0,
+			  "headers": {
+			    "Authorization": "Bearer c4517ac5e16ca69d767b8d6d338c34f9b25eef57"
+			  },
+			};
+			running_API(settings, 'branches');
+		}
+
+
+		function running_API(settings, choice){
+			$.ajax(settings).done(function (response) {
+			  if(choice === 'commits'){		  	
+				  console.log(response);
+				  var commit_count = document.getElementById('commits').innerHTML;
+				   var matches = commit_count.match(/(\d+)/);       
+		            if (matches) { 
+		                console.log(matches[0]); 
+		                console.log(response.length);
+		                if(response.length === undefined){
+			                var total_commits = parseInt(matches[0]) + 1;
+		    				document.getElementById('commits').innerHTML = `${total_commits} commits`;		                	
+		                }
+		                else{
+			                var total_commits = parseInt(matches[0]) + response.length;
+		    				document.getElementById('commits').innerHTML = `${total_commits} commits`;		                		
+		                } 
+		            } 
+				  getting_commits_data(response);
+			  }
+			  else if(choice === 'branches'){
+  				  console.log(response);	
+  				  document.getElementById('no_branches').innerHTML = `${response.length} branches`;
+  				  for (var i = 0; i < response.length; i++) {
+  				  	document.getElementById('branches_name').innerHTML += `<a href="javascript:void(0)" id="branches" class="dropdown-item" onclick="getting_branch_data('${response[i].commit.url}','${response[i].name}');"><i class="icon-sync"></i> ${response[i].name}</a>`;
+  				  }
+			  }
+			  if(response.length === 0){
+			  	console.log(`Length Empty of Repo`);	
+				document.getElementById('no_branches').innerHTML = '0 Branches';
+				document.getElementById('Repo_files').innerHTML += '<h6><code>No files!</code></h6>';			
+			  }
+			}).fail(function(response) {
+				console.log(`Repo is empty`);
+				document.getElementById('commits').innerHTML = '0 commits';
+            })
+		}
+
+
+		function getting_commits_data(response){
+			if(response.length === undefined){
+				console.log(response.commit.tree.url);
+				var commit_msg = response.commit.message;
+				console.log(commit_msg);
+				var commit_date = response.commit.author.date;
+				console.log(commit_date);
+				var settings = {
+				  "url": response.commit.tree.url,
+				  "method": "GET",
+				  "timeout": 0,
+				  "headers": {
+				    "Authorization": "Bearer c4517ac5e16ca69d767b8d6d338c34f9b25eef57"
+				  },
+				};
+				 var commit_count = document.getElementById('commits').innerHTML;
+			     var matches = commit_count.match(/(\d+)/);       
+	             if (matches) { 
+ 					getting_files(settings,commit_msg,commit_date,matches[0]);
+	             }
+			}
+			else{
+				for (var i = response.length - 1; i >= 0; i--) {
+					console.log(response[i].commit.tree.url);
+					var commit_msg = response[i].commit.message;
+					console.log(commit_msg);
+					var commit_date = response[i].commit.author.date;
+					console.log(commit_date);
+					var settings = {
+					  "url": response[i].commit.tree.url,
+					  "method": "GET",
+					  "timeout": 0,
+					  "headers": {
+					    "Authorization": "Bearer c4517ac5e16ca69d767b8d6d338c34f9b25eef57"
+					  },
+					};
+					getting_files(settings,commit_msg,commit_date,i);
+				}
+			}				
+		}
+
+		function getting_files(settings,commit_msg,commit_date,commit_no){
+			$.ajax(settings).done(function (response) {
+			  document.getElementById('Repo_files').innerHTML += `<tr><td colspan="3"><code><strong>Commit Number: ${commit_no}</strong></code></td></tr>`;
+			  for (var i = 0; i < response.tree.length; i++) {
+			  	console.log(response.tree[i].path);
+					if(response.tree[i].type === 'blob'){
+						  	document.getElementById('Repo_files').innerHTML += `
+			  				<tr>
+								<td>
+									<div class="d-flex align-items-center">
+										<div class="mr-3">
+											<span><i class="icon-file-text mr-2"></i></span>
+											<a href="javascript:void(0)" data-url="${response.tree[i].url}" class="text-default">${response.tree[i].path}</a>
+										</div>
+									</div>
+								</td>
+								<td><span class="text-muted">${commit_msg}</span></td>
+								<td><span class="text-muted">${commit_date}</span></td>
+							</tr>`;				  		
+				  	}
+				  	else if(response.tree[i].type === 'tree'){
+						  	document.getElementById('Repo_files').innerHTML += `
+			  				<tr>
+								<td>
+									<div class="d-flex align-items-center">
+										<div class="mr-3">
+											<span><i class="icon-folder mr-2"></i></span>
+											<a href="javascript:void(0)" data-url="${response.tree[i].url}" class="text-default">${response.tree[i].path}</a>
+										</div>
+									</div>
+								</td>
+								<td><span class="text-muted">${commit_msg}</span></td>
+								<td><span class="text-muted">${commit_date}</span></td>
+							</tr>`;
+				  	}				  	
+			  }
+			});
+		}
+
+
+		function getting_branch_data(branch_commit_url,branch_name){
+			console.log(branch_commit_url);
+			if(branch_name === 'master'){
+				document.getElementById('Repo_files').innerHTML = `<tr>
+								<th>File Name</th>
+								<th>Commit Message</th>
+								<th>Creation Time</th>
+							</tr>`;
+				document.getElementById('commits').innerHTML = `0 commits`;	
+				document.getElementById('branches_name').innerHTML = ``;
+				calling_from_referesh();
+			}
+			else{
+				var settings = {
+				  "url": branch_commit_url,
+				  "method": "GET",
+				  "timeout": 0,
+				  "headers": {
+				    "Authorization": "Bearer c4517ac5e16ca69d767b8d6d338c34f9b25eef57"
+				  },
+				};
+				running_API(settings,'commits');
+			}
+		}
+
+
 		$('#start_vcs').click(function() {
 			var contributor_name = document.getElementById('contributor_name').value;
 			if(contributor_name === ''){ return; }
 			name = generateName();			
-			creating_repo(name);
-			adding_contributor(contributor_name);
-
-			var projid = $("#start_vcs").attr("data-projectid");
-			var devid = $("#start_vcs").attr("data-devid");
-			var poid = $("#start_vcs").attr("data-poid");
-			window.location.href = '/create_repo/' + projid + '/' + devid + '/' + poid + '/' + name;
+			creating_repo(name,contributor_name);
 		});
 
-		function creating_repo(name){
+		function creating_repo(name,contributor_name){
 			var settings = {
 			  "url": "https://api.github.com/orgs/G-Hire/repos",
 			  "method": "POST",
 			  "timeout": 0,
 			  "headers": {
-			    "Authorization": "Bearer bf0ef26d03b2f52bb4a5b94cd671b6f3c7ebfc81",
+			    "Authorization": "Bearer c4517ac5e16ca69d767b8d6d338c34f9b25eef57",
 			    "Content-Type": "application/json"
 			  },
 			  "data": JSON.stringify({"name":name,"description":name,"private":true}),
@@ -348,21 +534,26 @@
 
 			$.ajax(settings).done(function (response) {
 			  console.log(response);
+	  		  adding_contributor(contributor_name,name);
 			});
 		}
 
-		function adding_contributor(cn){
+		function adding_contributor(cn,rn){
 			var settings = {
-			  "url": `https://api.github.com/repos/G-Hire/New-Repo/collaborators/${cn}`,
+			  "url": `https://api.github.com/repos/G-Hire/${rn}/collaborators/${cn}`,
 			  "method": "PUT",
-			  "timeout": 0,
+			  "timeout": 2000,
 			  "headers": {
-			    "Authorization": "Bearer bf0ef26d03b2f52bb4a5b94cd671b6f3c7ebfc81"
+			    "Authorization": "Bearer c4517ac5e16ca69d767b8d6d338c34f9b25eef57"
 			  },
 			};
 
 			$.ajax(settings).done(function (response) {
 			  console.log(response);
+			  	var projid = $("#start_vcs").attr("data-projectid");
+				var devid = $("#start_vcs").attr("data-devid");
+				var poid = $("#start_vcs").attr("data-poid");
+				window.location.href = '/create_repo/' + projid + '/' + devid + '/' + poid + '/' + name;
 			});
 		}
 

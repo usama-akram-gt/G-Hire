@@ -8,6 +8,7 @@ use App\User;
 use App\Message;
 use App\Events\messagesEvent;
 use Auth;
+use Redirect;
 
 class Projects extends Controller
 {
@@ -392,6 +393,6 @@ class Projects extends Controller
             'dev_id' => $devid,
             'prodO_id' => $poid]
         ]);
-        return Redirect::back()
+        return Redirect::back();
     }
 }
