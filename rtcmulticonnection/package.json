@@ -1,0 +1,108 @@
+{
+  "_from": "rtcmulticonnection",
+  "_id": "rtcmulticonnection@3.7.0",
+  "_inBundle": false,
+  "_integrity": "sha512-DkkvITocXd8KKPWxCCRW+zXA5uVouHzXMOF3SivJPJOICPm+k4VKaosU7Mdu/JnlLPHeZl9kHMtf44LOo0zEHA==",
+  "_location": "/rtcmulticonnection",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "rtcmulticonnection",
+    "name": "rtcmulticonnection",
+    "escapedName": "rtcmulticonnection",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/rtcmulticonnection/-/rtcmulticonnection-3.7.0.tgz",
+  "_shasum": "b7da320c29a46285e394dfe5d203f1f83f267084",
+  "_spec": "rtcmulticonnection",
+  "_where": "E:\\Screen Sharing github\\RTC MultiConnect Screen Sharirng",
+  "analyze": false,
+  "author": {
+    "name": "Muaz Khan",
+    "email": "muazkh@gmail.com",
+    "url": "https://muazkhan.com/"
+  },
+  "bugs": {
+    "url": "https://github.com/muaz-khan/RTCMultiConnection/issues",
+    "email": "muazkh@gmail.com"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "canvas-designer": "latest",
+    "detectrtc": "latest",
+    "fbr": "latest",
+    "getstats": "latest",
+    "multistreamsmixer": "latest",
+    "recordrtc": "latest",
+    "rtcmulticonnection-server": "latest",
+    "socket.io": "latest",
+    "webrtc-adapter": "latest"
+  },
+  "deprecated": false,
+  "description": "RTCMultiConnection is a WebRTC JavaScript wrapper library runs top over RTCPeerConnection API to support all possible peer-to-peer features.",
+  "devDependencies": {
+    "grunt": "0.4.5",
+    "grunt-bump": "0.7.0",
+    "grunt-cli": "0.1.13",
+    "grunt-contrib-clean": "0.6.0",
+    "grunt-contrib-concat": "0.5.1",
+    "grunt-contrib-copy": "0.8.2",
+    "grunt-contrib-uglify": "0.11.0",
+    "grunt-contrib-watch": "1.1.0",
+    "grunt-jsbeautifier": "0.2.10",
+    "grunt-replace": "0.11.0",
+    "load-grunt-tasks": "3.4.0"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "homepage": "https://rtcmulticonnection.herokuapp.com/demos/",
+  "keywords": [
+    "peer-to-peer",
+    "peer2peer",
+    "p2p",
+    "peer",
+    "webrtc",
+    "rtcmulticonnection",
+    "webrtc-library",
+    "library",
+    "javascript",
+    "chrome",
+    "firefox",
+    "opera",
+    "ie",
+    "edge",
+    "ios",
+    "safari",
+    "internet-explorer",
+    "android",
+    "rtcweb",
+    "rtcmulticonnection.js",
+    "multirtc",
+    "webrtc-experiment",
+    "javascript-library",
+    "muaz",
+    "muaz-khan"
+  ],
+  "license": "MIT",
+  "main": "./dist/RTCMultiConnection.js",
+  "name": "rtcmulticonnection",
+  "preferGlobal": false,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/muaz-khan/RTCMultiConnection.git"
+  },
+  "scripts": {
+    "contrib-prerequisites": "npm install grunt@0.4.5 && npm install grunt-bump@0.7.0 && npm install grunt-cli@0.1.13 && npm install grunt-contrib-clean@0.6.0 && npm install grunt-contrib-concat@0.5.1 && npm install grunt-contrib-copy@0.8.2 && npm install grunt-contrib-uglify@0.11.0 && npm install grunt-contrib-watch@1.1.0 && npm install grunt-jsbeautifier@0.2.10 && npm install grunt-replace@0.11.0 && npm install load-grunt-tasks@3.4.0",
+    "start": "node server.js"
+  },
+  "tonicExampleFilename": "npm-test.js",
+  "version": "3.7.0"
+}

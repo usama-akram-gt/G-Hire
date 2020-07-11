@@ -137,6 +137,7 @@ class Projects extends Controller
             for ($i = 0; $i < count($live_projects); $i++){
                 foreach($live_projects[$i] as $live_project){
                     $current_ongoing_project[] = DB::table('ongoingprojects')->where('project_id','=',$id)->get();
+                    $vcs_project[] = DB::table('vcs')->where('project_id','=',$id)->get();
                 }   
             }
 
@@ -174,9 +175,8 @@ class Projects extends Controller
                 }   
             }
         }
-        //if(!$vcs_project->isEmpty()){
-          //  var_dump($vcs_project);
-        //}
+        //var_dump($vcs_project);
+        //exit();
         return view('activeproject',compact('users','current_ongoing_project','live_projects','files','vcs_project'));
     } 
 

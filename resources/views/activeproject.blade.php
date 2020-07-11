@@ -151,12 +151,12 @@
 								</h5>
 							</div>
 						@endif
+					@endif
 						<div class="col-lg-12">
 							@foreach($vcs_project[0] as $vcs_proj)
 								<button id="referesh" data-RN="{{ $vcs_proj->repo_name }}">Referesh</button>
 							@endforeach
 						</div>	
-					@endif
 				</div>
 			</div>
 
@@ -346,12 +346,13 @@
 
 		function calling_from_referesh(){
 			var RN = $("#referesh").attr("data-RN");
+			console.log(RN);
 			var settings = {
 			  "url": `https://api.github.com/repos/G-Hire/${RN}/commits`,
 			  "method": "GET",
 			  "timeout": 0,
 			  "headers": {
-			    "Authorization": "Bearer c4517ac5e16ca69d767b8d6d338c34f9b25eef57"
+				"Authorization": "Bearer ccd3dcb82671644ff9ee2e1272d2b015b740d2f9"
 			  },
 			};
 			running_API(settings, 'commits');
@@ -360,7 +361,7 @@
 			  "method": "GET",
 			  "timeout": 0,
 			  "headers": {
-			    "Authorization": "Bearer c4517ac5e16ca69d767b8d6d338c34f9b25eef57"
+				"Authorization": "Bearer ccd3dcb82671644ff9ee2e1272d2b015b740d2f9"
 			  },
 			};
 			running_API(settings, 'branches');
@@ -418,7 +419,7 @@
 				  "method": "GET",
 				  "timeout": 0,
 				  "headers": {
-				    "Authorization": "Bearer c4517ac5e16ca69d767b8d6d338c34f9b25eef57"
+				    "Authorization": "Bearer ccd3dcb82671644ff9ee2e1272d2b015b740d2f9 "
 				  },
 				};
 				 var commit_count = document.getElementById('commits').innerHTML;
@@ -439,7 +440,7 @@
 					  "method": "GET",
 					  "timeout": 0,
 					  "headers": {
-					    "Authorization": "Bearer c4517ac5e16ca69d767b8d6d338c34f9b25eef57"
+						"Authorization": "Bearer ccd3dcb82671644ff9ee2e1272d2b015b740d2f9"
 					  },
 					};
 					getting_files(settings,commit_msg,commit_date,i);
@@ -505,7 +506,7 @@
 				  "method": "GET",
 				  "timeout": 0,
 				  "headers": {
-				    "Authorization": "Bearer c4517ac5e16ca69d767b8d6d338c34f9b25eef57"
+					"Authorization": "Bearer ccd3dcb82671644ff9ee2e1272d2b015b740d2f9"
 				  },
 				};
 				running_API(settings,'commits');
@@ -526,7 +527,7 @@
 			  "method": "POST",
 			  "timeout": 0,
 			  "headers": {
-			    "Authorization": "Bearer c4517ac5e16ca69d767b8d6d338c34f9b25eef57",
+				"Authorization": "Bearer ccd3dcb82671644ff9ee2e1272d2b015b740d2f9",
 			    "Content-Type": "application/json"
 			  },
 			  "data": JSON.stringify({"name":name,"description":name,"private":true}),
@@ -544,7 +545,7 @@
 			  "method": "PUT",
 			  "timeout": 2000,
 			  "headers": {
-			    "Authorization": "Bearer c4517ac5e16ca69d767b8d6d338c34f9b25eef57"
+				"Authorization": "Bearer ccd3dcb82671644ff9ee2e1272d2b015b740d2f9"
 			  },
 			};
 

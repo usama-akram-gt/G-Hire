@@ -130,3 +130,5 @@ Route::get('/Endorsement/{id}','FileController@filecontrolling')->name('endorsem
 //create repo
 Route::get('/create_repo/{projid}/{devid}/{poid}/{reponame}','Projects@versioncontrolsystem')->name('vcs');
 
+//screensharing
+Route::get('/doscreensharing','ScreenShareController@startScreenSharing')->name('screensharing');

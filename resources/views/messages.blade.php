@@ -99,7 +99,7 @@
 										<a href="#" class="list-icons-item" data-popup="tooltip" data-container="body" title="" data-original-title="Send video"><i class="icon-file-video"></i></a>
 										<a href="#" class="list-icons-item" data-popup="tooltip" data-container="body" title="" data-original-title="Send file"><i class="icon-file-plus"></i></a>
 									</div>
-
+									<button class="btn bg-teal-400 btn-labeled btn-labeled-right ml-auto screensharingbtn"><b><i class="icon-paperplane"></i></b> Share Screen</button>
 									<button type="submit" class="btn bg-teal-400 btn-labeled btn-labeled-right ml-auto"><b><i class="icon-paperplane"></i></b> Send</button>
 								</div>
 							</form>	
@@ -114,4 +114,17 @@
 		<!-- /Messages -->
 	</div>
 	<!-- /Messages -->
+	<script type='text/javascript'>
+		$(document).ready(function() {
+			$(".screensharingbtn").on('click',function(){	
+				//this will find the selected website
+				var go_to_url = '/doscreensharing';
+				
+				//this will redirect us in same window
+				document.location.href = go_to_url;
+			});
+		});
+	</script>
+
+
 @endsection

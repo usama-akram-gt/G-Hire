@@ -1,0 +1,3 @@
+server path: E:\Screen Sharing github\RTC MultiConnect Screen Sharirng (Server is here)\node_modules\rtcmulticonnection
+
+run command: node server.js
