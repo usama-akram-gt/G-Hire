@@ -115,20 +115,18 @@
 
 						<div class="dropdown-content-body dropdown-scrollable">
 							<ul class="media-list">
-								@foreach($users[0] as $user)
 									<li class="media">
 										<div class="mr-3">
 											<img src="/global_assets/images/placeholders/placeholder.jpg" width="36" height="36" class="rounded-circle" alt="">
 										</div>
 										<div class="media-body">
-											<a href="{{ route('showmessages') }}" class="media-title font-weight-semibold">{{ $user->fname. ' '. $user->lname }}</a>
+											<a href="{{ route('showmessages') }}" class="media-title font-weight-semibold">{{ 'Developer1' }}</a>
 											@if(Auth::user()->usertype === 'ProductOwner')
 												<span class="d-block text-muted font-size-sm">{{ 'Developer' }}</span>
 											@endif
 										</div>
 										<div class="ml-3 align-self-center"><span class="badge badge-mark border-success"></span></div>
 									</li>
-								@endforeach
 							</ul>
 						</div>
 					</div>

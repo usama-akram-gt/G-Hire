@@ -145,7 +145,7 @@
 					count = count + 1;
 				}
 			});
-			if(count >= 8){
+			if(count >= 1){
 				//if 80%
 				document.getElementById('testPanel').style.display = 'none';
 				document.getElementById('applyPanel').style.display = 'block';
